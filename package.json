@@ -1,8 +1,8 @@
 {
-  "name": "hmpps-template-typescript",
+  "name": "hmpps-prepare-a-case-e2e",
   "version": "0.0.1",
-  "description": "HMPPS Typescript Template",
-  "repository": "git@github.com:ministryofjustice/hmpps-template-typescript.git",
+  "description": "Hmpps Prepare A Case E2e",
+  "repository": "git@github.com:ministryofjustice/hmpps-prepare-a-case-e2e.git",
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",
