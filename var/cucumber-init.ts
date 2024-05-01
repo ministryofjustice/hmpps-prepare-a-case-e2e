@@ -70,8 +70,8 @@ BeforeAll(async () => {
                 value: JSON.stringify({
                     messageType: { DataType: 'String', StringValue: 'COMMON_PLATFORM_HEARING' },
                     hearingEventType: { DataType: 'String', StringValue: 'Unknown' },
-                })
-            }
+                }),
+            },
         ]
     )
 })

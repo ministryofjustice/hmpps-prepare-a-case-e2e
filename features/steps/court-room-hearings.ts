@@ -2,7 +2,6 @@ import { When } from '@cucumber/cucumber'
 import { expect } from '@playwright/test'
 
 When('I select court {string}', async function (this, courtName) {
-    
     const { page } = this
     await page.getByRole('button', { name: /Accept analytics cookies/ }).click()
     await page.focus('#pac-select-court')

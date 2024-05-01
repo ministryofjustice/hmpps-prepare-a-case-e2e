@@ -9,14 +9,18 @@ export const SHEFFIELD_COURT = {
 }
 
 export const DEFAULT_PERSON = {
-    firstName: "Hope",
-    lastName: "Heathcote",
-    sex: "Male",
+    firstName: 'Hope',
+    lastName: 'Heathcote',
+    sex: 'Male',
     dob: new Date(1990, 1, 1),
-    pnc: "PNC12345"
+    pnc: 'PNC12345',
 }
 
-export const hearingData = (person: Person = DEFAULT_PERSON, courtCode: string = SHEFFIELD_COURT.code, caseId: string = v4()) => ({
+export const hearingData = (
+    person: Person = DEFAULT_PERSON,
+    courtCode: string = SHEFFIELD_COURT.code,
+    caseId: string = v4()
+) => ({
     hearing: {
         id: v4(),
         hearingDays: [
