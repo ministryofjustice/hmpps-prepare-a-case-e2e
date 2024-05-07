@@ -1,15 +1,8 @@
 {
-  "trailingComma": "all",
+  "trailingComma": "es5",
   "singleQuote": true,
   "printWidth": 120,
   "semi": false,
   "arrowParens": "avoid",
-  "overrides": [
-    {
-      "files": "*.njk",
-      "options": {
-        "parser": "jinja-template"
-      }
-    }
-  ]
+  "tabWidth": 4
 }
