@@ -10,15 +10,15 @@ When('I select the filter {string}, {string}, {string}, {string}, {string}', asy
 
  })
 
- When('I add a comment on a case', async function () {
+ When('I add a comment on a {string}', async function (this, name) {
 
  })
 
- When('I edit the comment on a case', async function () {
+ When('I edit the comment on a {string}', async function (this, name) {
 
  })
 
- When('I delete the comment on a case', async function () {
+ When('I delete the comment on a {string}', async function (this, name) {
 
  })
 

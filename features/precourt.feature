@@ -9,10 +9,11 @@ When I select a '<court>'
 Then I should be on case list page
 
 When I select the filter '<Probation status>', '<Court room>', '<Session>', '<Source>', '<Flag>'
-And I add a comment on a case
-And I edit the comment on a case
-And I delete the comment on a case
+And I add a comment on a '<case>'
+And I edit the comment on a '<case>'
+And I delete the comment on a '<case>'
 Then I should not see the comment on the page
+
 
 When I upload invalid document
 Then I should see the error message
@@ -27,5 +28,5 @@ Then I should see the status is changed
 And I verify risk register and probation
 
 Examples:
-  |court|Probation status|Court room|Session|Source|Flag|document|status|
-  |Sheffield Magistrates' Court|Current|Crown Court 3-1|Morning|Common Platform|Breach||complete|
+  |court|Probation status|Court room|Session|Source|Flag|document|status|case|
+  |Sheffield Magistrates' Court|Current|Crown Court 3-1|Morning|Common Platform|Breach||complete||
