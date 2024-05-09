@@ -2,12 +2,11 @@ import { When,Given,Then } from '@cucumber/cucumber'
 import { expect } from '@playwright/test'
 
 
- When('I should be on  case list page', async function () {
+ When('I should be on case list page', async function () {
 
  })
 
-
-When('I select the filter {string}, {string}, {string}, {string}', async function (this,probationStatus,courtRoom,sessionSource,flag ) {
+When('I select the filter {string}, {string}, {string}, {string}, {string}', async function (this,probationStatus,courtRoom,session,source,flag) {
 
  })
 
