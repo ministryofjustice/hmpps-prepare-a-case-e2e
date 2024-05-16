@@ -1,25 +1,35 @@
 Feature: 
 As a court officer
-I want to perform precourt actions
+I want to perform resulted actions
 So that the cases have all the relavant information
 
-Scenario Outline: test pre-court journey
+Scenario Outline: Test resulted journey
+
 Given I am an authenticated user
 When I select a '<court>'
-And I should be on  case list page
-When I select the filter '<probation status>', '<court room>', '<session source>', '<flag>' 
-And I add, edit and delete the comment on a case
-And I upload mutiple invalid documents
-And I should see the error message
-And I upload mutiple valid documents
-And I open a '<document>'
-And I delete a '<document>'
-And I change admin prep '<status>' 
-Then I verify risk register and probation
+Then I should be on case list page
 
-#upload document- delete document, open document, upload multiple document, drag and drop a document, incorrect files
-#Then I see the court room hearings page with defendant name "Hope Heathcote"
+When I add a note on a '<case>'
+And I send the case to '<Outcome>'
+And I verify the case has been moved to outcome
 
-  Examples:
-  |court|probation status|court room|session|source|flag|document|status|
-  |Sheffield Magistrates' Court|Current|Crown Court 3-1|Morning|Common Platform|Breach||complete|
+When I assign the case '<number>' to me
+And I verify the cases has been moved to in-progress
+Then I verify the case count on "in-progess" tab
+
+When I assign the case '<number>' to me from case summary page
+And I verify the cases has been moved to in-progress
+Then I verify the case count on "in-progess" tab
+
+When I click on a case summary page
+And I select 'link to nDelius' from the dropdown
+And I enter CRN number of the defendent
+Then I should see the success message
+
+When I click on 'move to resulted' on a case
+Then I should see the case has been moved to resulted
+
+
+Examples:
+|Outcome|case|number|
+|Probation sentence|single||

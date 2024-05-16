@@ -38,6 +38,12 @@ When('I verify the case has been moved to outcome', async function () {
 
 })
 
+When('I assign the case {string} to me', async function (this,number) {
+
+})
+
+
+
 When('I select the filters {string}, {string}', async function (this,outcomeType,courtRoom) {
 
 })
@@ -55,11 +61,16 @@ When('I verify the cases has been moved to in-progress', async function () {
 
 })
 
+When('I verify the case count on in-progess tab', async function () {
+
+})
+
+
 When('I select the filter {string}, {string}, {string}', async function (this,outcomeType,courtRoom,assignedTo) {
 
 })
 
-When('I shoud see the rigt cases on the page', async function () {
+When('I shoud see the right cases on the page', async function () {
 
 })
 

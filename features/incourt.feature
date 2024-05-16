@@ -54,7 +54,7 @@ When I add a note on a '<case>'
 And I send the case to '<Outcome>'
 And I verify the case has been moved to outcome
 
-When I assign the '<number>' of case
+When I assign the case '<number>' to me
 Then I verify the cases has been moved to in-progress
 
 
@@ -66,15 +66,15 @@ Then I verify the cases has been moved to resulted
 
 
 When I select the filter '<Outcome Type>', '<Court room>', '<Assigned to>'
-Then I shoud see the rigt cases on the page
+Then I shoud see the right cases on the page
 
 When I click on the hearing date on the resulted page
 Then I should see the case list ordered 
 
 
 Examples:
-|Outcome|Outcome Type|Court room|Assigned to|case|
-|Probation sentence|Probation sentence|0|single||
+|Outcome|Outcome Type|Court room|Assigned to|case|number|court|
+|Probation sentence|Probation sentence|0|single||||
 # |Non probation sentence|Non probation sentence|1|multiple cases||
 # |Report requested|Report requested|2|all cases||
 # |Adjourned|Adjourned|3|||
