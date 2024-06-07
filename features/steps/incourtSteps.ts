@@ -1,63 +1,87 @@
 import { When,Given,Then } from '@cucumber/cucumber'
 import { expect } from '@playwright/test'
 
+Given('I am viewing the hearing defendant details for {string}', async function (this, defendantName) {
 
-
-When('I add a note on a {string}', async function (this,name) {
-
+    const { page } = this
+    await page.locator('a', { hasText: defendantName }).click()
 })
 
+When('I add a note', async function (this) {
 
-When('I edit the note on a {string}', async function (this,name) {
-
+    const { page } = this
+    const container = await page.locator('.hearing-note-container')
+    const form = await container.locator("form[action='summary/notes']")
+    await form.locator("[name='name']").fill('my note')
+    await form.locator('button').click()
 })
 
-When('I delete the note on a {string}', async function (this,name) {
+When('I edit the note', async function (this) {
 
+    const { page } = this
+    const container = await page.locator('.hearing-note-container')
+    await container.locator('a', { hasText: 'Edit' }).click()
+    const form = await container.locator("form[action='summary/publish-edited-note']")
+    await form.locator("[name='name']").fill('my note2')
+    await form.locator('button').click()
 })
 
+When('I delete the note', async function (this) {
 
-When('I should not see the note on the page', async function () {
-
+    const { page } = this
+    const container = await page.locator('.hearing-note-container')
+    await container.locator('a', { hasText: 'Delete' }).click()
+    await page.locator('button', { hasText:'Delete note' }).click()
 })
 
-When('I add a note on a {string}', async function (this,name) {
+Then('I should not see any note', async function (this) {
 
+    const { page } = this
+    await expect(page.locator('a', { hasText: 'Delete' })).toHaveCount(0)
 })
 
-When('I send the case to {string}', async function (this,outcome) {
+When('I send the case to {string}', async function (this, outcomeType) {
 
+    const { page } = this
+    await page.locator('a', { hasText: 'Send outcome to admin' }).click()
+    await page.getByLabel('Outcome type').selectOption({ label: outcomeType })
+    await page.locator('button', { hasText:'Send to admin' }).click()
 })
 
-When('I verify the case has been moved to hearing outcome added', async function () {
+Then('the case has moved to hearing outcome {string}', async function (this, outcomeType) {
 
+    const { page } = this
+    await expect(page.locator('span', { hasText: outcomeType })).toHaveCount(1)
 })
 
+Then('the case for {string} has moved to outcomes', async function (this, defendantName) {
 
-When('I verify the case has been moved to outcome', async function () {
-
+    const { page } = this
+    await expect(page.locator('a', { hasText: defendantName })).toHaveCount(1)
 })
 
-When('I assign the case {string} to me', async function (this,number) {
+When('I set the {string} filter to {string}', async function (this, filterName, filterValue) {
 
+    const { page } = this
+    await page.getByLabel(filterName).selectOption({ label: filterValue })
+    await page.locator('button', { hasText:'Apply filters' }).click()
 })
 
+Then('the outcome case count is {number}', async function (this, amount) {
 
-
-When('I select the filters {string}, {string}', async function (this,outcomeType,courtRoom) {
-
+    const { page } = this
+    await expect(page.locator('a.pac-defendant-link')).toHaveCount(amount)
 })
 
-When('I verify the right cases appear on the page after filters are applied', async function () {
+When('I move the outcome case for defendant {string} to move to in-progress', async function (this, defendantName) {
 
+    const { page } = this
+    await page.locator('a', { hasText: defendantName }).click()
+    await page.locator('button', { hasText:'Assign to me' }).click()
 })
 
+Then('the outcome case for defendant {string} has moved to in-progress', async function () {
 
-When('I assign the {string} of case', async function (this,number) {
-
-})
-
-When('I verify the cases has been moved to in-progress', async function () {
 
 })
 

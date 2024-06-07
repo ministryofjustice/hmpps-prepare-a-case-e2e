@@ -1,8 +1,8 @@
 import { Given, Then ,When} from '@cucumber/cucumber'
 import { expect } from '@playwright/test'
 
-    Given('I am an authenticated user', async function (this) {
-        const { page } = this
+Given('I am logged in', async function (this) {
+    const { page } = this
     await page.goto(process.env.PREPARE_A_CASE_FOR_SENTENCE_URL)
     await expect(page).toHaveTitle(/HMPPS Digital Services - Sign in/)
     await page.fill('#username', process.env.DELIUS_USERNAME!)

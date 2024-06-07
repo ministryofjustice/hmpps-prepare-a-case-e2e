@@ -57,6 +57,8 @@ BeforeAll(async () => {
             browser = await chromium.launch(browserOptions)
     }
 
+    const myHearingData = hearingData()
+
     await runPod(
         'court-probation-dev',
         'probation-integration-e2e-tests',
@@ -64,7 +66,7 @@ BeforeAll(async () => {
         ['aws sns publish --topic-arn "$TOPIC_ARN" --message "$MESSAGE" --message-attributes "$ATTRIBUTES"'],
         [
             { name: 'TOPIC_ARN', valueFrom: { secretKeyRef: { name: 'court-case-events-topic', key: 'topic_arn' } } },
-            { name: 'MESSAGE', value: JSON.stringify(hearingData()) },
+            { name: 'MESSAGE', value: JSON.stringify(myHearingData) },
             {
                 name: 'ATTRIBUTES',
                 value: JSON.stringify({
@@ -74,6 +76,30 @@ BeforeAll(async () => {
             },
         ]
     )
+
+    // will use this for the second journey as the first can't be reset currently
+    myHearingData.hearing.prosecutionCases[0].defendants[0].personDefendant.personDetails.firstName = 'John'
+    myHearingData.hearing.prosecutionCases[0].defendants[0].personDefendant.personDetails.lastName = 'Smith'
+
+    await runPod(
+        'court-probation-dev',
+        'probation-integration-e2e-tests',
+        'court-case-service',
+        ['aws sns publish --topic-arn "$TOPIC_ARN" --message "$MESSAGE" --message-attributes "$ATTRIBUTES"'],
+        [
+            { name: 'TOPIC_ARN', valueFrom: { secretKeyRef: { name: 'court-case-events-topic', key: 'topic_arn' } } },
+            { name: 'MESSAGE', value: JSON.stringify(myHearingData) },
+            {
+                name: 'ATTRIBUTES',
+                value: JSON.stringify({
+                    messageType: { DataType: 'String', StringValue: 'COMMON_PLATFORM_HEARING' },
+                    hearingEventType: { DataType: 'String', StringValue: 'Unknown' },
+                }),
+            },
+        ]
+    )
+
+
 })
 
 Before({ tags: '@ignore' }, async () => {
