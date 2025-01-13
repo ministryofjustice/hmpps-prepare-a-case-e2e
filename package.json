@@ -1,0 +1,36 @@
+{
+    "name": "@ministryofjustice/hmpps-prepare-a-case-e2e",
+    "description": "Playwright end to end tests for Probation in Court Services",
+    "version": "1.0.0",
+    "license": "MIT",
+    "homepage": "https://github.com/ministryofjustice/hmpps-prepare-a-case-e2e#readme",
+    "bugs": {
+      "url": "https://github.com/ministryofjustice/hmpps-prepare-a-case-e2e/issues"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/ministryofjustice/hmpps-prepare-a-case-e2e.git"
+    },
+    "scripts": {
+      "build": "tsc && cp -r package.json dist"
+    },
+    "type": "module",
+    "devDependencies": {
+      "@faker-js/faker": "^9.0.3",
+      "@kubernetes/client-node": "^1.0.0",
+      "@playwright/test": "1.49.1",
+      "@types/luxon": "^3.4.2",
+      "@types/node": "^22.10.1",
+      "@types/uuid": "^10.0.0",
+      "@typescript-eslint/eslint-plugin": "^8.0.1",
+      "@typescript-eslint/parser": "^8.0.1",
+      "dotenv": "^16.4.5",
+      "eslint-config-prettier": "^9.1.0",
+      "eslint-plugin-prettier": "^5.2.1",
+      "luxon": "^3.5.0",
+      "node-stream-zip": "^1.15.0",
+      "pdf2json": "^3.1.4",
+      "prettier": "3.4.2",
+      "uuid": "^11.0.2"
+    }
+  }
