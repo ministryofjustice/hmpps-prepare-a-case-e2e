@@ -8,10 +8,10 @@
 The project requires a robust, scalable, and modern end-to-end (E2E) testing framework to validate the integrity of user flows and system interactions. This decision is informed by the following factors:  
 
 1. **Existing End-to-End Codebase:**  
-   A current E2E testing project within the organization uses Playwright, offering reusable components and code snippets. Leveraging this codebase reduces the effort required to build a new testing framework from scratch.  
+   A current E2E testing project within the organisation uses Playwright, offering reusable components and code snippets. Leveraging this codebase reduces the effort required to build a new testing framework from scratch.  
 
 2. **Industry Recognition:**  
-   Playwright is a modern testing framework that supports multiple browsers and devices, including Chromium, Firefox, and WebKit. It is well-suited for testing complex front-end and back-end interactions. Furthermore, Playwright is listed on the organization's tech radar, indicating alignment with strategic technology initiatives and future-proofing.  
+   Playwright is a modern testing framework that supports multiple browsers and devices, including Chromium, Firefox, and WebKit. It is well-suited for testing complex front-end and back-end interactions. Furthermore, Playwright is listed on the organisation's tech radar, indicating alignment with strategic technology initiatives and future-proofing.  
 
 3. **Ease of Use and Maintenance:**  
    Playwright provides developer-friendly features, such as auto-waiting, built-in test runners, and detailed trace viewer debugging. Its robust API allows for consistent test execution and simplified maintenance.  
@@ -31,7 +31,7 @@ The project requires a robust, scalable, and modern end-to-end (E2E) testing fra
 Playwright will be adopted as the E2E testing library for the project. The following implementation strategy will be employed:  
 
 1. **Leverage Existing Codebase:**  
-   Identify and extract reusable components and tests from the current Playwright project within the organization to accelerate development.  
+   Identify and extract reusable components and tests from the current Playwright project within the organisation to accelerate development.  
 
 2. **Establish Best Practices:**  
    Define consistent coding standards, folder structures, and reusable utilities to ensure maintainability and ease of onboarding.  
@@ -45,20 +45,20 @@ Playwright will be adopted as the E2E testing library for the project. The follo
 ### Consequences  
 **Positive Impacts:**  
 - Accelerated development due to reuse of existing Playwright code.  
-- Standardization across teams by adopting a tech radar-aligned tool.  
+- Standardisation across teams by adopting a tech radar-aligned tool.  
 - Reduced maintenance overhead due to Playwright’s built-in automation and modern features.  
 - Better test coverage across multiple browsers and devices.  
 
 **Trade-Offs:**  
 - Initial learning curve for team members unfamiliar with Playwright.  
-- Potential migration effort if organizational priorities shift away from Playwright in the future.  
+- Potential migration effort if organisational priorities shift away from Playwright in the future.  
 
 ### Alternatives Considered  
 1. **Cypress:**  
-   While Cypress is a popular testing framework, it has limited cross-browser support compared to Playwright. It was deemed less aligned with the organization’s tech radar and existing resources.  
+   While Cypress is a popular testing framework, it has limited cross-browser support compared to Playwright. It was deemed less aligned with the organisation’s tech radar and existing resources.  
 
 2. **Selenium:**  
-   Selenium is a mature tool but lacks the modern features and performance optimizations of Playwright. Its verbose setup and slower test execution were significant drawbacks.  
+   Selenium is a mature tool but lacks the modern features and performance optimisations of Playwright. Its verbose setup and slower test execution were significant drawbacks.  
 
 3. **No Change:**  
    Continuing without a dedicated E2E testing framework would compromise the quality assurance goals and lead to ad hoc testing processes.  
