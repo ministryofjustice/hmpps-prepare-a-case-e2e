@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 
 import { addCourtToUser } from '@steps/my-courts/application'
-import onehearning from '@test-data/cp/valid-json/one-hearing.json' assert { type: "json" };
+import onehearing from '@test-data/cp/valid-json/one-hearing.json' assert { type: "json" };
 import { getCurrentDateTimeYYMMDDHHmmss } from '@utils/date-time';
 import { prepareCaseForSentenceLogin } from '@steps/auth/login'
 import { stringFormat } from "@utils/string-format";
@@ -14,10 +14,10 @@ let lastName = ""
 test.describe('e2e test - send a valid API json(1defendent, 1hearning, 1offence, 1case) request, add court and search for the defendent', () => {
   test('Login, Add Sheffield Court to My Courts and search for the defendent @regression @smoke @apiui', async ({ page, request }) => {
     const id = getCurrentDateTimeYYMMDDHHmmss()
-    const updatedonehearing = stringFormat(JSON.stringify(onehearning), `${id}`);
+    const updatedonehearing = stringFormat(JSON.stringify(onehearing), `${id}`);
 
-    firstName = onehearning.hearing.prosecutionCases[0].defendants[0].personDefendant.personDetails.firstName;
-    lastName = onehearning.hearing.prosecutionCases[0].defendants[0].personDefendant.personDetails.lastName;
+    firstName = onehearing.hearing.prosecutionCases[0].defendants[0].personDefendant.personDetails.firstName;
+    lastName = onehearing.hearing.prosecutionCases[0].defendants[0].personDefendant.personDetails.lastName;
     const fullName = firstName + ' ' + lastName;
 
     const response = await request.post("/hearing/" + `${id}`, {
