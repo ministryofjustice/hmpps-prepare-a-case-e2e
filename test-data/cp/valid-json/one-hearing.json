@@ -1,179 +1,147 @@
 {
-    "hearing": {
-      "id": "{0}",
-      "jurisdictionType": "MAGISTRATES",
-      "courtCentre": {
-        "address": {
-          "address1": "redacted",
-          "address2": "redacted",
-          "address3": "redacted",
-          "address4": "",
-          "address5": "",
-          "postcode": "redacted"
-        },
-        "code": "B43KB00",
-        "courtHearingLocation": "B43KB02",
-        "id": "9bafd21f-71cc-3a12-807e-b8dca555cb71",
-        "lja": {
-          "ljaCode": "1922",
-          "ljaName": "redacted Magistrates' Court"
-        },
-        "name": "redacted Magistrates' Court",
-        "roomId": "b7ea7ed5-fb98-3c1b-b2ab-0bfa1293ca45",
-        "roomName": "Courtroom 02"
+  "hearing": {
+    "id": "{0}",
+    "jurisdictionType": "MAGISTRATES",
+    "courtCentre": {
+      "address": {
+        "address1": "redacted",
+        "address2": "redacted",
+        "address3": "redacted",
+        "address4": "",
+        "address5": "",
+        "postcode": "redacted"
       },
-      "type": {
-        "description": "First hearing",
-        "id": "4a0e892d-c0c5-3c51-95b8-704d8c781776"
+      "code": "B43KB00",
+      "courtHearingLocation": "B43KB03",
+      "id": "9bafd21f-71cc-3a12-807e-b8dca555cb71",
+      "lja": {
+        "ljaCode": "1922",
+        "ljaName": "redacted Magistrates' Court"
       },
-      "hearingDays": [
-        {
-          "courtCentreId": "9bafd21f-71cc-3a12-807e-b8dca555cb71",
-          "courtRoomId": "b7ea7ed5-fb98-3c1b-b2ab-0bfa1293ca45",
-          "isCancelled": false,
-          "listedDurationMinutes": 20,
-          "listingSequence": 6,
-          "sittingDay": "2025-01-08T10:00:00.000Z"
-        }
-      ],
-      "hearingLanguage": "ENGLISH",
-      "prosecutionCases": [
-        {
-          "id": "b5c62921-c6f9-4f31-b479-5fd8e4b59f0f",
-          "prosecutionCaseIdentifier": {
-            "address": {
-              "address1": "redacted",
-              "address2": "redacted",
-              "address3": "redacted redacted",
-              "address4": "redacted",
-              "address5": "redacted",
-              "postcode": "redacted"
-            },
-            "contact": {
-              "primaryEmail": "redacted@redacted.co.uk"
-            },
-            "majorCreditorCode": "redacted",
-            "prosecutionAuthorityCode": "redacted",
-            "prosecutionAuthorityId": "e86becd5-aae8-3626-9789-188666240a39",
-            "prosecutionAuthorityName": "redacted Police",
-            "prosecutionAuthorityOUCode": "redacted",
-            "caseURN": "redacted"
+      "name": "redacted Magistrates' Court",
+      "roomId": "e329e8c9-02f8-34e5-a77a-65bcdb760622",
+      "roomName": "Courtroom 03"
+    },
+    "type": {
+      "description": "First hearing",
+      "id": "4a0e892d-c0c5-3c51-95b8-704d8c781776"
+    },
+    "hearingDays": [
+      {
+        "courtCentreId": "9bafd21f-71cc-3a12-807e-b8dca555cb71",
+        "courtRoomId": "e329e8c9-02f8-34e5-a77a-65bcdb760622",
+        "isCancelled": false,
+        "listedDurationMinutes": 20,
+        "listingSequence": 6,
+        "sittingDay": "2025-01-09T10:00:00.000Z"
+      }
+    ],
+    "hearingLanguage": "ENGLISH",
+    "prosecutionCases": [
+      {
+        "id": "2ff59fb9-c61d-4e1b-a225-3d6a79b2088a",
+        "prosecutionCaseIdentifier": {
+          "address": {
+            "address1": "redacted",
+            "address2": "redacted",
+            "address3": "redacted",
+            "address4": "redacted",
+            "address5": "redacted",
+            "postcode": "redacted"
           },
-          "initiationCode": "Q",
-          "defendants": [
-            {
-              "id": "7d2f9cfd-669c-4bb7-9fb8-a40164c8d7dc",
-              "prosecutionCaseId": "b5c62921-c6f9-4f31-b479-5fd8e4b59f0f",
-              "offences": [
-                {
-                  "id": "8367d2e0-3139-4eee-942f-e3d528b0a644",
-                  "offenceDefinitionId": "45cd77ef-e346-3aef-8099-29352f2f2b52",
-                  "offenceCode": "redacted",
-                  "offenceTitle": "Possess a controlled drug of Class B - Cannabis / Cannabis Resin",
-                  "wording": "Possess a controlled drug of Class B - Cannabis / Cannabis Resin (recordable), redacted, redacted, 092/61 / \n\nOn 10/07/2024 at redacted in the County of redacted had in your possession a quantity of  cannabis, a controlled drug of class B in contravention of section 5(1) of the Misuse of Drugs Act 1971.\n\n ",
-                  "startDate": "2024-07-10",
-                  "offenceTitleWelsh": "Meddu ar gyffur rheoledig Dosbarth B - Canabis / Resin Canabis",
-                  "offenceLegislation": "Contrary to section 5(2) of and Schedule 4 to the Misuse of    Drugs Act 1971.",
-                  "offenceLegislationWelsh": "Yn groes i adran 5(2) ac Atodlen 4 Deddf Camddefnyddio Cyffuriau 1971.",
-                  "modeOfTrial": "Either Way",
-                  "arrestDate": "2024-07-10",
-                  "chargeDate": "2024-11-23",
-                  "orderIndex": 1,
-                  "count": 0,
-                  "listingNumber": 1
-                }
-              ],
-              "prosecutionAuthorityReference": "redacted",
-              "personDefendant": {
-                "arrestSummonsNumber": "redacted",
-                "personDetails": {
-                  "address": {
-                    "address1": "redacted",
-                    "address2": "redacted",
-                    "address3": "redacted",
-                    "address4": "redacted",
-                    "address5": "redacted",
-                    "postcode": "redacted"
-                  },
-                  "contact": {
-                    "home": "redacted",
-                    "mobile": "redacted"
-                  },
-                  "dateOfBirth": "1990-01-01",
-                  "documentationLanguageNeeds": "ENGLISH",
-                  "ethnicity": {
-                    "observedEthnicityCode": "",
-                    "observedEthnicityDescription": "redacted",
-                    "observedEthnicityId": "c4ca4238-a0b9-3382-8dcc-509a6f75849b",
-                    "selfDefinedEthnicityCode": "redacted",
-                    "selfDefinedEthnicityDescription": "British",
-                    "selfDefinedEthnicityId": "c4ca4238-a0b9-3382-8dcc-509a6f75849b"
-                  },
-                  "firstName": "Test",
-                  "gender": "MALE",
-                  "hearingLanguageNeeds": "ENGLISH",
-                  "lastName": "redacted",
-                  "occupation": "redacted",
-                  "title": "redacted"
-                }
-              },
-              "aliases": [
-                {
-                  "firstName": "redacted",
-                  "lastName": "redacted"
-                }
-              ],
-              "croNumber": "redacted",
-              "pncId": "redacted",
-              "masterDefendantId": "6eec7419-d0ba-412a-bd24-011420e5b6ef",
-              "isYouth": false
-            }
-          ],
-          "caseStatus": "ACTIVE",
-          "originatingOrganisation": "redacted"
-        }
-      ],
-      "hasSharedResults": false,
-      "judiciary": [
-        {
-          "firstName": "redacted",
-          "isBenchChairman": true,
-          "isDeputy": false,
-          "judicialId": "e5044ba0-6e1b-3062-82e5-5d357e07e140",
-          "judicialRoleType": {
-            "judicialRoleTypeId": "e5044ba0-6e1b-3062-82e5-5d357e07e140",
-            "judiciaryType": "Magistrate"
+          "contact": {
+            "primaryEmail": "redacted@redacted.co.uk"
           },
-          "lastName": "redacted",
-          "title": "redacted",
-          "userId": "a3fff737-af0a-4c95-942b-c614aa178888"
+          "majorCreditorCode": "redacted",
+          "prosecutionAuthorityCode": "redacted",
+          "prosecutionAuthorityId": "e86becd5-aae8-3626-9789-188666240a39",
+          "prosecutionAuthorityName": "redacted Police",
+          "prosecutionAuthorityOUCode": "0430000",
+          "caseURN": "redacted"
         },
-        {
-          "firstName": "redacted",
-          "isBenchChairman": false,
-          "isDeputy": true,
-          "judicialId": "cdfe1585-2928-3fe3-af04-21fd3921b42c",
-          "judicialRoleType": {
-            "judicialRoleTypeId": "cdfe1585-2928-3fe3-af04-21fd3921b42c",
-            "judiciaryType": "Magistrate"
-          },
-          "lastName": "redacted",
-          "title": "redacted",
-          "userId": "d7ed6c2e-8240-4a7b-bc55-2d67cffdfb70"
+        "initiationCode": "Q",
+        "defendants": [
+          {
+            "id": "5e8fcf7e-6884-4789-b6ff-be63ad149754",
+            "prosecutionCaseId": "2ff59fb9-c61d-4e1b-a225-3d6a79b2088a",
+            "offences": [
+              {
+                "id": "6cd83056-6ba9-4007-b796-c4b5dadcbfbf",
+                "offenceDefinitionId": "fdab1c88-5fe2-3cb3-962b-1a1e79d976b9",
+                "offenceCode": "redacted",
+                "offenceTitle": "Assault by beating",
+                "wording": "Assault by beating (recordable), redacted, redacted, 105/01 / \n\nOn 19/06/2024 at redacted in the County of redacted assaulted redacted redacted by beating redacted.\n\n ",
+                "startDate": "2024-06-19",
+                "offenceTitleWelsh": "Adran 39 - ymosod drwy guro (curfa)",
+                "offenceLegislation": "Contrary to section 39 of the Criminal Justice Act1988.",
+                "offenceLegislationWelsh": "Yn groes i adran 39 Deddf Cyfiawnder Troseddol 1988.",
+                "modeOfTrial": "Summary",
+                "arrestDate": "2024-06-20",
+                "chargeDate": "2024-11-23",
+                "orderIndex": 1,
+                "count": 0,
+                "listingNumber": 1
+              }
+            ],
+            "prosecutionAuthorityReference": "redacted",
+            "personDefendant": {
+              "arrestSummoredactedNumber": "redacted",
+              "personDetails": {
+                "address": {
+                  "address1": "redacted",
+                  "address2": "redacted",
+                  "address3": "redacted",
+                  "address4": "redacted",
+                  "address5": "redacted",
+                  "postcode": "redacted"
+                },
+                "contact": {
+                  "mobile": "redacted"
+                },
+                "dateOfBirth": "1990-01-01",
+                "documentationLanguageNeeds": "ENGLISH",
+                "ethnicity": {
+                  "observedEthnicityCode": "",
+                  "observedEthnicityDescription": "redacted",
+                  "observedEthnicityId": "c4ca4238-a0b9-3382-8dcc-509a6f75849b",
+                  "selfDefinedEthnicityCode": "redacted",
+                  "selfDefinedEthnicityDescription": "Not stated",
+                  "selfDefinedEthnicityId": "b8d13cd7-99b1-8888-a3ca-b8974ca9702f"
+                },
+                "firstName": "xyz",
+                "gender": "MALE",
+                "hearingLanguageNeeds": "ENGLISH",
+                "lastName": "redacted"
+              }
+            },
+            "aliases": [
+              {
+                "firstName": "redacted",
+                "lastName": "redacted"
+              }
+            ],
+            "pncId": "redacted",
+            "masterDefendantId": "5e8fcf7e-6884-4789-b6ff-be63ad149754",
+            "isYouth": false
+          }
+        ],
+        "caseStatus": "ACTIVE",
+        "originatingOrganisation": "redacted"
+      }
+    ],
+    "hasSharedResults": false,
+    "judiciary": [
+      {
+        "firstName": "redacted",
+        "judicialId": "b595f793-d103-34b1-9b5f-7497c85773ed",
+        "judicialRoleType": {
+          "judicialRoleTypeId": "b595f793-d103-34b1-9b5f-7497c85773ed",
+          "judiciaryType": "District Judge (MC)"
         },
-        {
-          "firstName": "redacted",
-          "isBenchChairman": false,
-          "isDeputy": true,
-          "judicialId": "88882441-c215-31b8-975c-6fb2db64162b",
-          "judicialRoleType": {
-            "judicialRoleTypeId": "88882441-c215-31b8-975c-6fb2db64162b",
-            "judiciaryType": "Magistrate"
-          },
-          "lastName": "redacted",
-          "title": "redacted",
-          "userId": "f7ec685c-5273-4d0f-a151-89215e38aecd"
-        }
-      ]
-    }
+        "lastName": "redacted",
+        "title": "",
+        "userId": "67964394-8dd5-419c-b2d1-64c1bb9db24f"
+      }
+    ]
   }
+}

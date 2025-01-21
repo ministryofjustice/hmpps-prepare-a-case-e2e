@@ -14,7 +14,4 @@ export default async function globalSetup(config: FullConfig) {
         expect(response.status()).toBe(200);
         const body = await response.json();
         process.env.TOKEN = body.access_token;
-        console.log("token: ", process.env.TOKEN, "\n");
-        console.log("auth: ",process.env.DELIUS_DEV_AUTHORIZATION, "\n");
-        console.log("oauthurl: ",process.env.DELIUS_DEV_OAUTHURL);
 }
