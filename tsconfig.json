@@ -11,9 +11,9 @@
     "baseUrl": "./",
     "paths": {
       "@steps/*": ["./steps/*"],
-      "@testdata/*": ["./testdata/*"],
+      "@test-data/*": ["./test-data/*"],
       "@utils/*": ["./utils/*"],
     }
   },
-  "include": ["steps", "testdata", "tests"]
+  "include": ["steps", "test-data", "tests"]
 }

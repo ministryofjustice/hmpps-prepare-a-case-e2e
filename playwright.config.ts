@@ -1,5 +1,4 @@
 import { defineConfig, devices, type PlaywrightTestConfig } from '@playwright/test'
-//import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv'
 
 // Read from ".env" file.
