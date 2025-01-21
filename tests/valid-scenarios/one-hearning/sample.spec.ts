@@ -1,11 +1,11 @@
 import { expect, test } from '@playwright/test'
 
 import { addCourtToUser } from '@steps/my-courts/application'
-import sampleValidJson from '@testdata/cp/validjson/sample.json' assert { type: "json" };
+import sampleValidJson from '@test-data/cp/valid-json/sample.json' assert { type: "json" };
 import { getCurrentDateTimeYYMMDDHHmmss } from '@utils/date-time';
 import { prepareCaseForSentenceLogin } from '@steps/auth/login'
 import { stringFormat } from "@utils/string-format";
-import { searchForDefendent } from '@steps/search-defendents/searchdefesndent';
+import { searchForDefendent } from '@steps/search-defendant/search-defendant';
 
 let firstName = ""
 
