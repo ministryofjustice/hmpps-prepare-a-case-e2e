@@ -1,36 +1,34 @@
 import { expect, test } from '@playwright/test'
 
 import { addCourtToUser } from '@steps/my-courts/application'
-import sampleValidJson from '@test-data/cp/valid-json/sample.json' assert { type: "json" };
-import { getCurrentDateTimeYYMMDDHHmmss } from '@utils/date-time';
+import samplevalidjson from '@test-data/cp/valid-json/sample.json' with { type: "json" };
+import { generateRandomHearingId } from '@utils/generate-random-hearing-id';
 import { prepareCaseForSentenceLogin } from '@steps/auth/login'
-import { stringFormat } from "@utils/string-format";
-import { searchForDefendent } from '@steps/search-defendant/search-defendant';
+import { replaceJsonProperty } from "@utils/replace-json-property";
+import { searchForDefendant } from '@steps/search-defendant/search-defendant';
 
 let firstName = ""
 
 let lastName = ""
 
-test.describe('sample test - send a valid API json(1defendent, 1hearning, 1offence, 1case) request, add court and search for the defendent', () => {
-  test('Login, Add Sheffield Court to My Courts and search for the defendent @regression @smoke @apiui', async ({ page, request }) => {
-    const id = getCurrentDateTimeYYMMDDHHmmss()
-    const updatedSampleValidJson = stringFormat(JSON.stringify(sampleValidJson), `${id}`);
+test.describe('e2e test - send a valid API json(1defendant, 1hearing, 1offence, 1case) request, add court and search for the defendant', () => {
+  test('Login, Add Sheffield Court to My Courts and search for the defendant @regression @smoke @apiui', async ({ page, request }) => {
+    const id = generateRandomHearingId()
+    const updatedsamplevalidjson = replaceJsonProperty(JSON.stringify(samplevalidjson), `${id}`);
 
-    firstName = sampleValidJson.hearing.prosecutionCases[0].defendants[0].personDefendant.personDetails.firstName;
-    lastName = sampleValidJson.hearing.prosecutionCases[0].defendants[0].personDefendant.personDetails.lastName;
+    firstName = samplevalidjson.hearing.prosecutionCases[0].defendants[0].personDefendant.personDetails.firstName;
+    lastName = samplevalidjson.hearing.prosecutionCases[0].defendants[0].personDefendant.personDetails.lastName;
     const fullName = firstName + ' ' + lastName;
 
-    console.log(firstName)
-
-    const response = await request.post("/hearing/" + `${id}`, {
+    const response = await request.post(`${process.env.COURT_HEARING_EVENT_RECEIVER_URL}` + '/hearing/' + `${id}`, {
       headers: { "Authorization": `Bearer ${process.env.TOKEN}`, },
-      data: JSON.parse(updatedSampleValidJson)
+      data: JSON.parse(updatedsamplevalidjson)
     })
     expect(response.status()).toBe(200)
 
     //ui journey
     await prepareCaseForSentenceLogin(page)
     await addCourtToUser(page, "Sheffield Magistrates' Court")
-    await searchForDefendent(page, fullName, 3)
+    await searchForDefendant(page, fullName, 3)
   })
 });
