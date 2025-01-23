@@ -1,6 +1,6 @@
-import { FullConfig, expect, request } from '@playwright/test';
+import { expect, request } from '@playwright/test';
 
-export default async function globalSetup(config: FullConfig) {
+export const getToken = async ()=> {
 
     const requestContext = await request.newContext();
     const response = await requestContext.post(`${process.env.DELIUS_DEV_OAUTHURL}`, {
@@ -14,4 +14,7 @@ export default async function globalSetup(config: FullConfig) {
         expect(response.status()).toBe(200);
         const body = await response.json();
         process.env.TOKEN = body.access_token;
+        return body.access_token;
 }
+
+export default getToken;

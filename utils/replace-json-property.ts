@@ -5,5 +5,5 @@ import { expect } from "@playwright/test";
 * @param args Arguments, needs to be placed properly in the string.
 */
 // to pass the dynamic value in run time based on index
-export const stringFormat = (str, ...args) =>
+export const replaceJsonProperty = (str, ...args) =>
    str.replace(/{(\d+)}/g, (match, index) => args[index].toString() || "");

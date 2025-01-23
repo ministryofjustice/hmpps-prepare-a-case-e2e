@@ -1,4 +1,4 @@
-export const getCurrentDateTimeYYMMDDHHmmss = (): string => {
+export const generateRandomHearingId = (): string => {
 
     const currentDateTime = new Date();
     const formattedDateTime = currentDateTime.toISOString().replace(/-|T|:|\..+/g, '').slice(2, 14);

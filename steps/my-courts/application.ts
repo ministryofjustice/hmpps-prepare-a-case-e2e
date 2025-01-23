@@ -1,4 +1,4 @@
-import { expect, Page } from '@playwright/test'
+import { expect, type Page } from '@playwright/test'
 
 export async function addCourtToUser(page: Page, court: string) {
     await page.getByRole('button', { name: /Accept analytics cookies/ }).click()
