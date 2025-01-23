@@ -12,7 +12,7 @@ let firstName = ""
 let lastName = ""
 
 test.describe('e2e test - send a valid API json(1defendant, 1hearing, 1offence, 1case) request, add court and search for the defendant', () => {
-  test('Login, Add Sheffield Court to My Courts and search for the defendant @regression @smoke @apiui', async ({ page, request }) => {
+  test('verify the case summary screen - @regression @smoke @apiui', async ({ page, request }) => {
     const id = generateRandomHearingId()
     const updatedonehearing = replaceJsonProperty(JSON.stringify(onehearing), `${id}`);
 
