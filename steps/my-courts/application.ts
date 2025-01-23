@@ -1,4 +1,4 @@
-import { expect, type Page } from '@playwright/test'
+import { expect, Page } from '@playwright/test'
 import { getTestConfig } from '@utils/config/testConfig'
 
 export async function addCourtToUser(page: Page, court: string) {
