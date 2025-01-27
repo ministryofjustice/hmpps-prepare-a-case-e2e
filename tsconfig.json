@@ -15,5 +15,5 @@
       "@utils/*": ["./utils/*"],
     }
   },
-  "include": ["steps", "test-data", "tests"]
+  "include": ["steps", "test-data", "tests", "utils"]
 }
