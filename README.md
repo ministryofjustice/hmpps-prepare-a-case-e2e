@@ -1,4 +1,4 @@
-End-to-end tests
+End-to-End tests
 for Probation in Court,
 written in TypeScript using [Playwright](https://playwright.dev).
 

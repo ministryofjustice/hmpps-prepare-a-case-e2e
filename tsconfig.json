@@ -7,9 +7,13 @@
     "outDir": "dist",
     "declaration": true,
     "sourceMap": true,
+    "resolveJsonModule": true,
+    "baseUrl": "./",
     "paths": {
       "@steps/*": ["./steps/*"],
+      "@test-data/*": ["./test-data/*"],
+      "@utils/*": ["./utils/*"],
     }
   },
-  "include": ["steps", "test-data", "tests"]
+  "include": ["steps", "test-data", "tests", "utils"]
 }

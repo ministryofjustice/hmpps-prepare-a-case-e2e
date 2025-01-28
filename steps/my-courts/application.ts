@@ -1,6 +1,9 @@
-import { expect, Page } from '@playwright/test'
+import { expect, type Page } from '@playwright/test'
+import { getTestConfig } from '@utils/config/testConfig'
 
 export async function addCourtToUser(page: Page, court: string) {
+    const config = getTestConfig()
+    await page.goto(config.services.prepareACase.urls.editCourts)
     await page.getByRole('button', { name: /Accept analytics cookies/ }).click()
     await page.focus('#pac-select-court')
     await page.keyboard.type(court)

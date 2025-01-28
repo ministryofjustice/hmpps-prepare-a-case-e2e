@@ -1,8 +1,11 @@
 import { devices, type PlaywrightTestConfig } from '@playwright/test'
+import path from 'path';
 import dotenv from 'dotenv'
 
 // Read from ".env" file.
 dotenv.config({ path: '.env' })
+
+export const STORAGE_STATE = "bin/.state/state.json";//path.join(__dirname, ".run/auth/user.json");
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -23,6 +26,7 @@ const config: PlaywrightTestConfig = {
     reporter: 'html',
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
+        storageState: STORAGE_STATE,
         actionTimeout: 1800000,
         timezoneId: 'Europe/London',
         launchOptions: { slowMo: 150 },
@@ -32,7 +36,25 @@ const config: PlaywrightTestConfig = {
     },
 
     /* Configure projects */
-    projects: [{ name: 'default' }],
+    projects: [
+        {
+            name: 'config',
+            testMatch: '**/config/**/*.setup.ts'
+        },
+        {
+            name: 'setup',
+            testMatch: '**/setup/**/*.setup.ts',
+            dependencies: ['config']
+        },
+        {
+            name: 'default',
+            testMatch: '**/*.spec.ts',
+            dependencies: ['setup'],
+            use: {
+                storageState: STORAGE_STATE
+            }
+        }
+    ],
 }
 
 export default config

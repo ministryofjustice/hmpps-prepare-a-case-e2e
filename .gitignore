@@ -27,3 +27,6 @@ out/
 
 ### MacOS ###
 .DS_Store
+
+### Playright state management
+bin/.state/**/*
