@@ -12,8 +12,9 @@
     "paths": {
       "@steps/*": ["./steps/*"],
       "@testdata/*": ["./testdata/*"],
-      "@utils/*": ["./utils/*"]
+      "@utils/*": ["./utils/*"],
+      "@data/*": ["./data/*"]
     }
   },
-  "include": ["steps", "testdata", "tests", "utils"]
+  "include": ["steps", "testdata", "tests", "utils", "data"]
 }

@@ -29,4 +29,4 @@ out/
 .DS_Store
 
 ### Playright state management
-bin/.state/**/*
+/bin/.state/config.json
