@@ -1,4 +1,5 @@
 import { devices, type PlaywrightTestConfig } from '@playwright/test'
+import path from 'path';
 import dotenv from 'dotenv'
 
 // Read from ".env" file.
@@ -10,7 +11,6 @@ export const STORAGE_STATE = "bin/.state/state.json";//path.join(__dirname, ".ru
  * See https://playwright.dev/docs/test-configuration.
  */
 const config: PlaywrightTestConfig = {
-    globalSetup: './access-token.ts',
     testDir: process.env.TEST_DIR ? process.env.TEST_DIR : './tests',
     /* Maximum time one test can run for. */
     timeout: 180000,
