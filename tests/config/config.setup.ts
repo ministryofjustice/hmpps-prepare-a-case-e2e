@@ -1,5 +1,5 @@
 import { test as setup, expect, request } from '@playwright/test';
-import TestConfig from '../../utils/config/testConfig'
+import TestConfig from '@utils/config/testConfig.d'
 import { generateAuthToken } from '@utils/auth/authToken'
 import { setTestConfig } from '@utils/config/testConfig'
 
