@@ -11,10 +11,10 @@
     "baseUrl": "./",
     "paths": {
       "@steps/*": ["./steps/*"],
-      "@testdata/*": ["./testdata/*"],
+      "@test-data/*": ["./test-data/*"],
       "@utils/*": ["./utils/*"],
       "@data/*": ["./data/*"]
     }
   },
-  "include": ["steps", "testdata", "tests", "utils", "data"]
+  "include": ["steps", "test-data", "tests", "utils", "data"]
 }
