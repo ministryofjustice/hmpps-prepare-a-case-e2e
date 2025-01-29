@@ -13,7 +13,8 @@
       "@steps/*": ["./steps/*"],
       "@test-data/*": ["./test-data/*"],
       "@utils/*": ["./utils/*"],
+      "@data/*": ["./data/*"]
     }
   },
-  "include": ["steps", "test-data", "tests", "utils"]
+  "include": ["steps", "test-data", "tests", "utils", "data"]
 }
