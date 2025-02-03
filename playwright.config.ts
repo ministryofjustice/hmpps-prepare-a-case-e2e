@@ -1,5 +1,4 @@
 import { devices, type PlaywrightTestConfig } from '@playwright/test'
-import path from 'path';
 import dotenv from 'dotenv'
 
 // Read from ".env" file.
@@ -11,7 +10,7 @@ export const STORAGE_STATE = "bin/.state/state.json";//path.join(__dirname, ".ru
  * See https://playwright.dev/docs/test-configuration.
  */
 const config: PlaywrightTestConfig = {
-    testDir: process.env.TEST_DIR ? process.env.TEST_DIR : './tests',
+    testDir: process.env.TEST_DIR ? process.env.TEST_DIR : '.',
     /* Maximum time one test can run for. */
     timeout: 180000,
     /* Maximum time test suite can run for. */
@@ -38,18 +37,22 @@ const config: PlaywrightTestConfig = {
     /* Configure projects */
     projects: [
         {
+            name: 'data unit tests',
+            testMatch: 'data/**/*.test.ts'
+        },
+        {
             name: 'config',
-            testMatch: '**/config/**/*.setup.ts'
+            testMatch: 'tests/config/**/*.setup.ts'
         },
         {
             name: 'setup',
-            testMatch: '**/setup/**/*.setup.ts',
+            testMatch: 'tests/setup/**/*.setup.ts',
             dependencies: ['config']
         },
         {
-            name: 'default',
-            testMatch: '**/*.spec.ts',
-            dependencies: ['setup'],
+            name: 'e2e',
+            testMatch: 'tests/**/*.spec.ts',
+            dependencies: ['setup', 'data unit tests'],
             use: {
                 storageState: STORAGE_STATE
             }

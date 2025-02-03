@@ -12,7 +12,7 @@ export const generateHearing = async (request: APIRequestContext, hearing: any) 
     const lastName = hearing.hearing.prosecutionCases[0].defendants[0].personDefendant.personDetails.lastName;
     const fullName = firstName + ' ' + lastName;
 
-    const response = await request.post(`${config.services.courtHearing.urls.eventReceiver}` + '/hearing/' + `${id}`, {
+    const response = await request.post(`${config.services.courtHearingEventReceiver.urls.root}` + '/hearing/' + `${id}`, {
       headers: { "Authorization": `Bearer ${config.auth.token}`, },
       data: JSON.parse(updatedonehearing)
     })

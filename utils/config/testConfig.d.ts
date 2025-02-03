@@ -3,16 +3,19 @@ type TestConfig = {
         token: string
     },
     services: {
-        courtHearing: {
+        courtHearingEventReceiver: {
+            // Example of an external service, urls should be preformatted if possible
             urls: {
-                eventReceiver: string
+                root: string,
+                addHearing: string
             }
         },
         prepareACase: {
+            // Example of an internal service, keep to basics and steps can manage specifics
             urls: {
                 auth: string,
                 root: string,
-                editCourts: string
+                // editCourts: string
             }
         }
     }

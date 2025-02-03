@@ -1,4 +1,4 @@
-import { OptionsOrAll } from "@data/generators"
+import { OptionsNoneOrAll } from "@data/generators"
 
 export type Address = {
     address1: string,
@@ -10,7 +10,7 @@ export type Address = {
 }
 
 export type AddressOptions = {
-    include: OptionsOrAll<AddressIncludes>
+    include: OptionsNoneOrAll<AddressIncludes>
 }
 
 // If updating, consider the includes set of @util/address/addressGenerator

@@ -1,6 +1,7 @@
 import { fakerEN_GB as faker } from '@faker-js/faker'
+import moment from 'moment'
 import { DataGenerator } from '../generators'
-import { DateOfBirthType, Person, PersonOptions } from './person.d'
+import { DATE_OF_BIRTH_FORMAT, Sex, Person, PersonOptions } from './person.d'
 import addressGenerator from '@data/address/addressGenerator'
 import contactDetailsGenerator from '@data/contactDetails/contactDetailsGenerator'
 
@@ -8,23 +9,29 @@ const personGenerator: () => DataGenerator<Person, PersonOptions> = () => {
     const addressGen = addressGenerator()
     const contactGen = contactDetailsGenerator()
     return {
-        generate: (options: PersonOptions) => {
-            /**
-             * The UI accounts for a primary property named "defendantSex"
-             * This does not appear on any of our examples but has the expected value options of:
-             * "M" => Male, "F" => Female, "NS" => Not Specified or allows to fall through to Unknown for none of these
-             * Need to try and track how that value when we are rendering relates to this data on a hearing
-             * as it comes back to us from the Court Case Service
-             */ 
-            const sex = faker.person.sexType()
+        generate: (options?) => {
+            const sex = faker.helpers.arrayElement(Object.values(Sex))
+            let sexForFaker: 'male' | 'female' | undefined = undefined
+            switch (sex) {
+                case Sex.Male:
+                    sexForFaker = 'male'
+                    break;
+                case Sex.Female:
+                    sexForFaker = 'female'
+            }
+
+            const dateOfBirth = faker.date.birthdate(
+                (options?.dateOfBirth ?? 'adult') == 'adult'
+                ? {}
+                : { mode: 'age', min: 10, max: 17 } // min: 10?
+            )
 
             return {
-                name: {
-                    firstName: faker.person.firstName(sex),
-                    lastName: faker.person.lastName(sex),
-                },
+                title: faker.person.prefix(sexForFaker),
+                firstName: faker.person.firstName(sexForFaker),
+                lastName: faker.person.lastName(sexForFaker),
                 gender: sex,
-                dateOfBirth: faker.date.birthdate((options?.dateOfBirth ?? DateOfBirthType.Adult) == DateOfBirthType.Adult ? {} : { mode: 'age', min: 8, max: 17 }), // min? realistic age at which someone could be a part of this system?
+                dateOfBirth: moment(dateOfBirth).format(DATE_OF_BIRTH_FORMAT),
                 address: addressGen.generate(options?.address),
                 contact: contactGen.generate(options?.contactDetails)
             }

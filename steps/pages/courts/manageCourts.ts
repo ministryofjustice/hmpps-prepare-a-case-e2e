@@ -1,9 +1,18 @@
 import { expect, Page } from '@playwright/test'
 import { getTestConfig } from '@utils/config/testConfig'
 
-export async function addCourtToUser(page: Page, court: string) {
-    const config = getTestConfig()
-    await page.goto(config.services.prepareACase.urls.editCourts)
+const config = getTestConfig()
+
+const myCourts = async (page: Page) => {
+    await page.goto(`${config.services.prepareACase.urls.root}/my-courts`)
+}
+const editCourts = async (page: Page) => {
+    await page.goto(`${config.services.prepareACase.urls.root}/my-courts/edit`)
+}
+
+const addCourtToUser = async (page: Page, court: string) => {
+    await editCourts(page)
+    
     await page.getByRole('button', { name: /Accept analytics cookies/ }).click()
     await page.focus('#pac-select-court')
     await page.keyboard.type(court)
@@ -14,3 +23,13 @@ export async function addCourtToUser(page: Page, court: string) {
     await page.getByRole('link', { name: court }).click()
     await expect(page).toHaveTitle('Case list - Prepare a case for sentence')
 }
+
+const manageCourts = {
+    pages: {
+        myCourts,
+        editCourts
+    },
+    addCourtToUser
+}
+
+export default manageCourts
