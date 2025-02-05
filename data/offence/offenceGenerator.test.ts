@@ -1,11 +1,12 @@
 import test, { expect } from "@playwright/test";
 import offenceGenerator from "./offenceGenerator";
 import { simpleDefinedTest } from "@data/testUtils";
+import { faker } from "@faker-js/faker";
 
 test.describe('Offence Generator', async () => {
     const sut = offenceGenerator()
 
-    test.describe('Default field: currently no options as data is primarily static', async () => {
+    test.describe('Default fields without options', async () => {
         const result = sut.generate()
 
         // Merely check a value has been provided for these fields, currently not logic involved
@@ -35,6 +36,20 @@ test.describe('Offence Generator', async () => {
             expect(result.verdict).toBeDefined()
             expect(result.verdict.verdictType).toBeDefined()
             expect(result.verdict.verdictType.description).toBeDefined()
+        })
+    })
+
+    test.describe('Listing Number Options', async () => {
+        test('None specified: default behaviour - 1', async () => {
+            const result = sut.generate()
+
+            expect(result.listingNumber).toEqual(1)
+        })
+        test('Listing Number specified', async () => {
+            const randomListingNumber = faker.number.int({ min: 2, max: 9 })
+            const result = sut.generate({ listingNumber: randomListingNumber })
+
+            expect(result.listingNumber).toEqual(randomListingNumber)
         })
     })
 })

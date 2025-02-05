@@ -1,9 +1,10 @@
 import test, { expect } from "@playwright/test";
-import courtHearingGenerator from "./courtHearingRequestGenerator";
+import courtHearingGenerator, { hearingSessionTimes } from "./courtHearingRequestGenerator";
 import { simpleDefinedTest } from "@data/testUtils";
-import { Sheffield } from "./courtCentres.data";
-import { InitiationCode, JurisdictionType } from "./courtHearingRequest.d";
+import { courtCentres, Sheffield } from "./courtCentres.data";
+import { CourtHearingRequest, HearingSessionTimes, InitiationCode, JurisdictionType } from "./courtHearingRequest.d";
 import moment from "moment";
+import { faker } from "@faker-js/faker";
 
 test.describe('Court Hearing Request Generator', async () => {
     const sut = courtHearingGenerator()
@@ -20,14 +21,15 @@ test.describe('Court Hearing Request Generator', async () => {
             const courtCentre = hearing.courtCentre
             
             simpleDefinedTest('Id', courtCentre.id)
-            test('Code', async () => {
-                expect(courtCentre.code).toEqual(Sheffield.code)
-            })
-            test('Name', async () => {
-                expect(courtCentre.name).toEqual(Sheffield.name)
-            })
+            simpleDefinedTest('Code', courtCentre.code)
+            simpleDefinedTest('Name', courtCentre.name)
             simpleDefinedTest('Room Id', courtCentre.roomId)
-            simpleDefinedTest('Room Name', courtCentre.roomName)            
+            test('Room Name', async () => {
+                expect(courtCentre.roomName).toBeDefined()
+                const roomNameNumber = parseInt(courtCentre.roomName)
+                expect(roomNameNumber).toBeGreaterThanOrEqual(1)
+                expect(roomNameNumber).toBeLessThanOrEqual(20)
+            })         
         })
         test.describe('Type', async () => {
             const hearingType = hearing.type
@@ -52,11 +54,7 @@ test.describe('Court Hearing Request Generator', async () => {
                     expect(hearingDay.listedDurationMinutes).toBeLessThanOrEqual(60)
                     expect(hearingDay.listedDurationMinutes % 10).toEqual(0)
                 })
-                test('Sitting Day', async () => {
-                    const expectedSitting = moment().set('hour', 9).set('minutes', 0).set('seconds', 0).set('milliseconds', 0).toISOString()
-                    expect(hearingDay.sittingDay).toBeDefined()
-                    expect(hearingDay.sittingDay).toEqual(expectedSitting)
-                })
+                simpleDefinedTest('Sitting Day', hearingDay.sittingDay)
             })
         })
         test.describe('Prosecution Cases', async () => {
@@ -126,6 +124,87 @@ test.describe('Court Hearing Request Generator', async () => {
                     })
                 })
             })
+        })
+    })
+
+    test.describe('Court options', async () => {
+        test(' None specified: default behaviour - uses Sheffield', async () => {
+            const result = sut.generate()
+
+            expect(result.hearing.courtCentre.code).toEqual(Sheffield.code)
+            expect(result.hearing.courtCentre.name).toEqual(Sheffield.name)
+        })
+        test.describe('Court centre specified', async () => {
+            courtCentres.forEach(centre => {
+                test(`- Court Centre: ${centre.name} (${centre.code})`, async () => {
+                    const result = sut.generate({ court: centre })
+
+                    expect(result.hearing.courtCentre.name).toEqual(centre.name)
+                    expect(result.hearing.courtCentre.code).toEqual(centre.code)
+                })
+            })
+        })
+    })
+
+    
+    const testForExpectedSitting = (result: CourtHearingRequest, expectedSitting: string) => {
+        const hearingDay = result.hearing.hearingDays.at(0)
+
+        expect(hearingDay.sittingDay).toBeDefined()
+        expect(hearingDay.sittingDay).toEqual(expectedSitting)
+    }
+    test.describe('Hearing Day options', async () => {
+        test('None specified: default behaviour - today/morning session', async () => {
+            const expectedSitting = `${moment().format('YYYY-MM-DD')}T09:00:00.000Z`
+            const result = sut.generate()
+
+            testForExpectedSitting(result, expectedSitting)
+        })
+
+        test('Hearing Date specified/Session not specified - Date used, session default', async () => {
+            const randomDate = faker.date.past()
+            const expectedSitting = `${moment(randomDate).format('YYYY-MM-DD')}T09:00:00.000Z`
+            const result = sut.generate({ hearingDay: { hearingDate: randomDate }})
+            
+            testForExpectedSitting(result, expectedSitting)
+        })
+
+        test.describe('Hearing Date not specified/Session specified - Date default, session used', async () => {
+            Object.keys(hearingSessionTimes).forEach((sessionKey: keyof HearingSessionTimes) => {
+                test(`- ${sessionKey}`, async () => {
+                    const expectedSitting = `${moment().format('YYYY-MM-DD')}T${hearingSessionTimes[sessionKey].toString().padStart(2, '0')}:00:00.000Z`
+                    const result = sut.generate({ hearingDay: { hearingSession: sessionKey }})
+
+                    testForExpectedSitting(result, expectedSitting)
+                })
+            })
+        })
+
+        test.describe('Hearing Date specified/Session specified - Both used', async () => {
+            const randomDate = faker.date.past()
+            Object.keys(hearingSessionTimes).forEach((sessionKey: keyof HearingSessionTimes) => {
+                test(`- ${sessionKey}`, async () => {
+                    const expectedSitting = `${moment(randomDate).format('YYYY-MM-DD')}T${hearingSessionTimes[sessionKey].toString().padStart(2, '0')}:00:00.000Z`
+                    const result = sut.generate({ hearingDay: { hearingDate: randomDate, hearingSession: sessionKey }})
+
+                    testForExpectedSitting(result, expectedSitting)
+                })
+            })
+        })
+    })
+
+    test.describe('Number of Offences options', async () => {
+        test('None specified: default behaviour - 1 offence', async () => {
+            const result = sut.generate()
+
+            expect(result.hearing.prosecutionCases.at(0).defendants.at(0).offences).toHaveLength(1)
+        })
+
+        test('Specified Number of Offences', async () => {
+            const randomNumberOfOffences = faker.number.int({ min: 1, max: 9})
+            const result = sut.generate({ numOfOffences: randomNumberOfOffences })
+
+            expect(result.hearing.prosecutionCases.at(0).defendants.at(0).offences).toHaveLength(randomNumberOfOffences)
         })
     })
 })

@@ -23,3 +23,7 @@ export type JudicialResult = {
     judicialResultTypeId: string
     resultText: string,
 }
+
+export type OffenceOptions = {
+    listingNumber?: number
+}

@@ -26,13 +26,21 @@ Install the latest version with `brew install npm`, or a specific version with `
 
 ### Configuration
 
-Create a `.env` file at the root of the project with the following values:
+Create a `.env` file at the root of the project following these values (these pressume that Dev us being used):
 
 ```
 DELIUS_USERNAME=<delius_username>
 DELIUS_PASSWORD=<delius_password>
 
-PREPARE_A_CASE_FOR_SENTENCE_URL=https://prepare-a-case-dev.apps.live-1.cloud-platform.service.justice.gov.uk
+DELIUS_OAUTHURL = "https://sign-in-dev.hmpps.service.justice.gov.uk/auth/oauth/token"
+DELIUS_AUTHORIZATION = "Basic <authorization token>"
+
+AUTH_URL = "https://sign-in-dev.hmpps.service.justice.gov.uk/auth/sign-in?redirect_uri={callback}/login/callback"
+
+COURT_HEARING_EVENT_RECEIVER_URL = "https://court-hearing-event-receiver-dev.hmpps.service.justice.gov.uk" 
+COURT_HEARING_EVENT_RECEIVER_ADD = "{rootUrl}/hearing/{id}"
+
+PREPARE_A_CASE_FOR_SENTENCE_URL = "https://prepare-a-case-dev.apps.live-1.cloud-platform.service.justice.gov.uk"
 ```
 
 ## Running Tests

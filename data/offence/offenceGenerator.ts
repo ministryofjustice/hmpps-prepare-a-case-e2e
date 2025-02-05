@@ -1,14 +1,14 @@
 import { DataGenerator } from "@data/generators";
-import { Offence } from "./offence";
+import { Offence, OffenceOptions } from "./offence";
 import { faker } from "@faker-js/faker";
 
 /**
  * Note, this data will be largely static until we have gather a working set of plausidble date sets
  * at which point it can be expanded
  */
-const offenceGenerator: () => DataGenerator<Offence, {}> = () => {
+const offenceGenerator: () => DataGenerator<Offence, OffenceOptions> = () => {
     return {
-        generate: () => {
+        generate: (options?) => {
             return {
                 id: faker.string.uuid(),
                 offenceDefinitionId: faker.string.uuid(),
@@ -16,7 +16,7 @@ const offenceGenerator: () => DataGenerator<Offence, {}> = () => {
                 offenceTitle: "Assault a person thereby occasioning them actual bodily harm",
                 wording: "On 25/11/2023 at Oxford,  you assaulted John Smith, thereby occasioning him, actual bodily harm",
                 offenceLegislation: "Contrary to section 47 of the Offences Against the Person Act 1861.",
-                listingNumber: faker.number.int({ min: 1, max: 9}),
+                listingNumber: options?.listingNumber ?? 1,
                 judicialResults: [{
                     isConvictedResult: false,
                     label: "Test judicial result's label",

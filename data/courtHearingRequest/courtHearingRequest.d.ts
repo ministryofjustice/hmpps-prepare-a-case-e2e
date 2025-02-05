@@ -78,8 +78,11 @@ type Defendant = {
 
 
 export type CourtHearingRequestOptions = {
-    court: CourtCentreData
-    hearingSession?: keyof HearingSessionTimes
+    court?: CourtCentreData
+    hearingDay?: {
+        hearingDate?: Date
+        hearingSession?: keyof HearingSessionTimes
+    }
     numOfOffences?: number // Temp just a number until we have something to configure on offences
     defendant?: PersonOptions
 }

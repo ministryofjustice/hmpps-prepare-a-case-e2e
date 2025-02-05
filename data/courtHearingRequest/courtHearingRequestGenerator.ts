@@ -6,7 +6,7 @@ import personGenerator from "@data/person/personGenerator";
 import offenceGenerator from "@data/offence/offenceGenerator";
 import * as CourtCentreData from "./courtCentres.data";
 
-const hearingSessionTimes: HearingSessionTimes = {
+export const hearingSessionTimes: HearingSessionTimes = {
     morning: 9,
     afternoon: 15
 }
@@ -14,9 +14,9 @@ const hearingSessionTimes: HearingSessionTimes = {
 const courtHearingGenerator: () => DataGenerator<CourtHearingRequest, CourtHearingRequestOptions> = () => {
     const offenceGen = offenceGenerator()
     const personGen = personGenerator()
+
     return {
         generate: (options?) => {
-
             return {
                 hearing : {
                     id: faker.string.uuid(),
@@ -25,7 +25,7 @@ const courtHearingGenerator: () => DataGenerator<CourtHearingRequest, CourtHeari
                         code: (options?.court ?? CourtCentreData.Sheffield).code,
                         name: (options?.court ?? CourtCentreData.Sheffield).name,
                         roomId: faker.string.uuid(),
-                        roomName: `Room ${faker.number.int({min: 1, max: 3})}-${faker.number.int({min: 1, max: 9})}`
+                        roomName: faker.number.int({min: 1, max: 20}).toString()
                     },
                     type: {
                         id: faker.string.uuid(),
@@ -34,8 +34,8 @@ const courtHearingGenerator: () => DataGenerator<CourtHearingRequest, CourtHeari
                     jurisdictionType: JurisdictionType.MAGISTRATES,
                     hearingDays: [{
                         listedDurationMinutes: faker.number.int({ min: 10, max: 60, multipleOf: 10 }),
-                        sittingDay: moment()
-                            .set('hour', (options?.hearingSession ?? 'morning') ? hearingSessionTimes.morning : hearingSessionTimes.afternoon)
+                        sittingDay: moment(options?.hearingDay?.hearingDate ?? {}).utc()
+                            .set('hour', hearingSessionTimes[options?.hearingDay?.hearingSession ?? 'morning'])
                             .set('minute', 0)
                             .set('seconds', 0)
                             .set('milliseconds', 0)
