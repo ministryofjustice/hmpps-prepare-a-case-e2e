@@ -3,7 +3,7 @@ import { Address, AddressOptions, AddressIncludes } from "./address";
 import { fakerEN_GB as faker } from "@faker-js/faker";
 import { resolveIncludeAll } from "@data/utils";
 
-const allIncludes: AddressIncludes[] = ['address2', 'city', 'region', 'country']
+export const allIncludes: AddressIncludes[] = ['address2', 'city', 'region', 'country']
 
 const addressGenerator: () => DataGenerator<Address, AddressOptions> = () => ({
     generate: (options?) => {
@@ -16,7 +16,7 @@ const addressGenerator: () => DataGenerator<Address, AddressOptions> = () => ({
             ...(toInclude?.includes('country') ?? false ? { address5: faker.location.state()} : {}),
             postCode: faker.location.zipCode()
         }
-}
+    }
 })
 
 export default addressGenerator

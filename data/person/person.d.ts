@@ -2,24 +2,27 @@ import { ContactDetails, ContactDetailsOptions } from '@data/contactDetails/cont
 import { Address, AddressOptions } from '../address/address.d'
 
 export type Person = {
-    name: {
-        firstName: string,
-        lastName: string
-    },
-    gender: string
-    dateOfBirth: Date,
+    title: string,
+    firstName: string,
+    lastName: string,
+    gender: Sex
+    dateOfBirth: string,
     address: Address,
     contact: ContactDetails
 }
 
 export type PersonOptions = {
-    dateOfBirth?: DateOfBirthType,
+    dateOfBirth?: DateOfBirthRange,
     address?: AddressOptions,
     contactDetails?: ContactDetailsOptions
 }
 
-// An alternative to unioned type values. Do we have a preference?
-export enum DateOfBirthType {
-    Adult,
-    Youth
+export type DateOfBirthRange = 'adult' | 'youth'
+export enum Sex {
+    Male = 'MALE',
+    Female = 'FEMALE',
+    NotKnown = 'NOT_KNOWN',
+    NotSpecified ='NOT_SPECIFIED'
 }
+
+export const DATE_OF_BIRTH_FORMAT = 'YYYY-MM-DD'

@@ -1,14 +1,13 @@
-import { OptionsOrAll } from "@data/generators"
+import { OptionsNoneOrAll } from "@data/generators"
 
 export type ContactDetails = {
     home?: string,
     mobile?: string,
-    work?: string,
-    email?: string
+    work?: string
 }
 
 export type ContactDetailsOptions = {
-    include?: OptionsOrAll<ContactDetailsIncludes>
+    include?: OptionsNoneOrAll<ContactDetailsIncludes>
 }
 
 // If updating, consider the includes set of @util/contactDetails/contactDetailsGenerator

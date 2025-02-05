@@ -1,13 +1,14 @@
-import { OptionsOrAll } from "./generators"
+import { OptionsNoneOrAll } from "./generators"
 
-function resolveIncludeAll<T>(include: OptionsOrAll<T>, allIncludes: T[], defaultIncludes: T[] = []): T[] {
-    let result: T[]
-    if(include === 'all') {
-        result = allIncludes
-    } else {
-        result = include as T[]
+function resolveIncludeAll<T>(include: OptionsNoneOrAll<T>, allIncludes: T[], defaultIncludes: T[] = []): T[] {
+    switch(include) {
+        case 'all':
+            return allIncludes;
+        case 'none':
+            return [];
+        default:
+            return include ?? defaultIncludes;
     }
-    return result ?? defaultIncludes
 }
 
 export {
