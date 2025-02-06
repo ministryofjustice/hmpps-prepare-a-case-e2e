@@ -1,6 +1,6 @@
 import { test } from '@playwright/test'
 
-import { addCourtToUser } from '@steps/pages/courts/manageCourts'
+import manageCourts from '@steps/pages/courts/manageCourts'
 import samplevalidjson from '@test-data/cp/valid-json/sample.json' with { type: "json" };
 import { searchForDefendant } from '@steps/search-defendant/search-defendant';
 import { getTestConfig } from '@utils/config/testConfig';
@@ -13,7 +13,7 @@ test.describe('e2e test - send a valid API json(1defendant, 1hearing, 1offence, 
     const generatedName = await generateHearing(request, samplevalidjson)
 
     //ui journey
-    await addCourtToUser(page, "Sheffield Magistrates' Court")
+    await manageCourts.addCourtToUser(page, "Sheffield Magistrates' Court")
     await searchForDefendant(page, generatedName, 3)
   })
 });
