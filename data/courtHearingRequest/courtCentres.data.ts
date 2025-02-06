@@ -1,5 +1,3 @@
-import { CourtCentre } from "./courtHearingRequest";
-
 export type CourtCentreData = {
     code: string,
     name: string
