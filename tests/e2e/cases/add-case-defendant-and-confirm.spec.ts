@@ -1,16 +1,20 @@
-import test, { expect } from "@playwright/test";
-
+import test from "@playwright/test";
 import { Sheffield } from "@data/courtHearingRequest/courtCentres.data";
 import cases from "@steps/pages/cases/cases";
 import courtHearingGenerator from "@data/courtHearingRequest/courtHearingRequestGenerator";
 import manageCourts from "@steps/pages/courts/manageCourts";
-import { searchForDefendant } from "@steps/search-defendant/search-defendant";
 import { sendCourtHearingToEventReceiver } from "@steps/_data/data";
+import moment from "moment";
+import { TAGS } from "tests/tags";
 
 const courtHearingGen = courtHearingGenerator()
 
 test.describe('WHEN a Case and Defendant is added to the Court Hearing Event Receiver', async () => {
-    test('THEN the same Defendant can be found in Prepare A Case @apiui @regression @smoke', async ({ page, request }) => {
+    test('THEN the same Defendant can be found in Prepare A Case', { tag: [TAGS.ui, TAGS.regression, TAGS.smoke] }, async ({ page, request }) => {
+        /**
+         * The challenge here is that this adds a new result to bottom of the list
+         * This means with enough runs or 
+         */
         const chosenCourt = Sheffield
         const courtHearingRequest = courtHearingGen.generate({ court: chosenCourt })
         const defendant = courtHearingRequest.hearing.prosecutionCases.at(0).defendants.at(0)
@@ -19,10 +23,8 @@ test.describe('WHEN a Case and Defendant is added to the Court Hearing Event Rec
 
         await sendCourtHearingToEventReceiver(request, courtHearingRequest)
         await manageCourts.addCourtToUser(page, Sheffield.name)
-        // Currently failing, seems that the search has no results but checking after the fact has the result. Possibly a timing issue?
-        // await searchForDefendant(page, fullName, 1)
-        await cases.pages.caseSummary(page, chosenCourt.code, courtHearingRequest.hearing.id, defendant.id)
-        // Loose check whilst we develop what "check this person exists" looks likes
-        expect(page.getByRole('heading', { name: fullName })).toBeVisible()
+        
+        await cases.pages.casesForCourt(page, chosenCourt.code, moment().format('YYYY-MM-DD'))
+        const defendantRow = await cases.ensureDefendentExists(page, fullName)
     })
 })
