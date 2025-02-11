@@ -184,7 +184,7 @@ test.describe('Court Hearing Request Generator', async () => {
             const randomDate = faker.date.past()
             Object.keys(hearingSessionTimes).forEach((sessionKey: keyof HearingSessionTimes) => {
                 test(`- ${sessionKey}`, async () => {
-                    const expectedSitting = `${moment(randomDate).format('YYYY-MM-DD')}T${hearingSessionTimes[sessionKey].toString().padStart(2, '0')}:00:00.000Z`
+                    const expectedSitting = `${moment(randomDate).utc().format('YYYY-MM-DD')}T${hearingSessionTimes[sessionKey].toString().padStart(2, '0')}:00:00.000Z`
                     const result = sut.generate({ hearingDay: { hearingDate: randomDate, hearingSession: sessionKey }})
 
                     testForExpectedSitting(result, expectedSitting)
