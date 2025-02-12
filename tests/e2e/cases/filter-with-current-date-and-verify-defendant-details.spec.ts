@@ -2,15 +2,13 @@ import test, { expect } from "@playwright/test";
 
 import { Sheffield } from "@data/courtHearingRequest/courtCentres.data";
 import { TAGS } from "tests/tags";
+import cases from "@steps/pages/cases/cases";
 import courtHearingGenerator from "@data/courtHearingRequest/courtHearingRequestGenerator";
-import { filterWithCurrentDate } from "@steps/filter-with-current-date/filter-with-current-date";
-import { getTestConfig } from "@utils/config/testConfig";
 import manageCourts from "@steps/pages/courts/manageCourts";
+import moment from "moment";
 import { sendCourtHearingToEventReceiver } from "@steps/_data/data";
-import { verifyDefedantDetails } from "@steps/verify-defendant-details/verify-defendant-details"
 
 const courtHearingGen = courtHearingGenerator()
-const config = getTestConfig()
 
 test.describe('WHEN a Case and Defendant is added to the Court Hearing Event Receiver', async () => {
     test('THEN filter with current date and verify details of the Defendant in Prepare A Case', { tag: [TAGS.ui, TAGS.regression, TAGS.smoke] }, async ({ page, request }) => {
@@ -26,8 +24,7 @@ test.describe('WHEN a Case and Defendant is added to the Court Hearing Event Rec
 
         await sendCourtHearingToEventReceiver(request, courtHearingRequest)
         await manageCourts.addCourtToUser(page, Sheffield.name)
-        await filterWithCurrentDate(page)
-        await verifyDefedantDetails(page, fullName, "No record", offence, listing, 'Morning', court)
-
+        await cases.pages.casesForCourt(page, chosenCourt.code, moment().format('YYYY-MM-DD'))
+        await cases.verifyDefedantDetails(page, fullName, "No record", offence, listing, 'Morning', court)
     })
 })
