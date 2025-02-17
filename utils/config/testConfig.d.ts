@@ -9,13 +9,13 @@ type TestConfig = {
                 root: string,
                 addHearing: string
             }
+            waitTime: number
         },
         prepareACase: {
             // Example of an internal service, keep to basics and steps can manage specifics
             urls: {
                 auth: string,
-                root: string,
-                // editCourts: string
+                root: string
             }
         }
     }

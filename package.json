@@ -36,6 +36,7 @@
     },
     "dependencies": {
         "faker": "^5.5.3",
-        "moment": "^2.30.1"
+        "moment": "^2.30.1",
+        "node": "23.5"
     }
 }

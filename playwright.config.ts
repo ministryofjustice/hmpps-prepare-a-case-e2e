@@ -45,14 +45,18 @@ const config: PlaywrightTestConfig = {
             testMatch: 'tests/config/**/*.setup.ts'
         },
         {
+            name: 'auth',
+            testMatch: 'tests/auth/**/*.setup.ts'
+        },
+        {
             name: 'setup',
             testMatch: 'tests/setup/**/*.setup.ts',
-            dependencies: ['config']
+            dependencies: ['auth', 'config']
         },
         {
             name: 'e2e',
             testMatch: 'tests/**/*.spec.ts',
-            dependencies: ['setup', 'data unit tests'],
+            dependencies: ['auth', 'config', 'setup', 'data unit tests'],
             use: {
                 storageState: STORAGE_STATE
             }
