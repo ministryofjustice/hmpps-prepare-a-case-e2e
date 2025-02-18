@@ -20,7 +20,8 @@ setup('Config setup', async ({page}) => {
           urls: {
             root: courtHearingEventReceiverRootUrl,
             addHearing: includeSlug(process.env.COURT_HEARING_EVENT_RECEIVER_ADD, courtHearingEventReceiverRootUrl)
-          }
+          },
+          waitTime: Number(process.env.COURT_HEARING_EVENT_RECEIVER_WAIT_MILLISECONDS)
         },
         prepareACase: {
           urls: {

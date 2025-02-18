@@ -39,6 +39,7 @@ AUTH_URL = "https://sign-in-dev.hmpps.service.justice.gov.uk/auth/sign-in?redire
 
 COURT_HEARING_EVENT_RECEIVER_URL = "https://court-hearing-event-receiver-dev.hmpps.service.justice.gov.uk" 
 COURT_HEARING_EVENT_RECEIVER_ADD = "{rootUrl}/hearing/{id}"
+COURT_HEARING_EVENT_RECEIVER_WAIT_MILLISECONDS = "200"
 
 PREPARE_A_CASE_FOR_SENTENCE_URL = "https://prepare-a-case-dev.apps.live-1.cloud-platform.service.justice.gov.uk"
 ```

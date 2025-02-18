@@ -1,6 +1,6 @@
 import { Page, expect } from "@playwright/test"
-
 import { getTestConfig } from "@utils/config/testConfig"
+import { countSuffix } from "@utils/textUtils"
 
 const config = getTestConfig()
 
@@ -16,58 +16,79 @@ const caseSummary = async (page: Page, courtCode: string, hearingId: string, def
 
 const ensureDefendentExists = async (page: Page, defendantName: string) => {
     const defendantRow = page.getByRole('row', { exact: false, name: defendantName })
-    expect(defendantRow).toBeVisible()
-    return defendantRow
+    if(await defendantRow.count() == 1) {
+        expect(defendantRow).toBeVisible()
+        return true
+    } else {
+        return false
+    }
 }
 
-const verifyDefedantDetails = async (page: Page, expectedDefendantFullName: string, expectedProbationStatus?: string, expectedOffence?: string, expectedListing?: number, expectedSession?: string, expectedCourt?: string) => {
-    let matchFound = false;
-
-    while (!matchFound) {
-        const xpathTotalRowCount: number = await page.locator("//tr[@class='govuk-table__row']").count();
-        for (let tableRow = 1; tableRow <= xpathTotalRowCount - 1; tableRow++) {
-            const actualDefendantFullName = await page.locator(`//tbody/tr[${tableRow}]/td[1]`).textContent();
-            if (actualDefendantFullName && actualDefendantFullName.trim() === expectedDefendantFullName) {
-                const tableData: string[] = [];
-                const xpathTotalDataCount: number = await page.locator(`//tbody/tr[${tableRow}]/td`).count();
-                for (let cellData = 1; cellData <= xpathTotalDataCount - 1; cellData++) {
-                    const xpathCellData = `(//tbody/tr[${tableRow}]/td)[${cellData}]`;
-                    const element = page.locator(xpathCellData);
-                    const xpathTableData = await element.textContent();
-                    if (xpathTableData) {
-                        const trimmedTableData = xpathTableData.trim();
-                        tableData.push(trimmedTableData);
-                        console.debug(`Trimmed value pushed to tableData[${cellData - 1}]:`, trimmedTableData);
-                    } else {
-                        throw new Error(`Table data not found for ${xpathCellData}`);
-                    }
-                }
-                expect(tableData[0]).toEqual(expectedDefendantFullName);
-                expect(tableData[1]).toEqual(expectedProbationStatus);
-                expect(tableData[2]).toEqual(expectedOffence);
-                expect(tableData[3]).toMatch(new RegExp(expectedListing.toString()));
-                expect(tableData[4]).toEqual(expectedSession);
-                expect(tableData[5]).toEqual(expectedCourt);
-
-                matchFound = true;
-                break;
-            }
+const verifyDefedantDetails = async (page: Page, defendantFullName: string, probationStatus?: string, offence?: string, listing?: number, session?: string, court?: string) => {
+    const tableRow = page.getByRole('row', {exact: false, name: defendantFullName})
+    if(await tableRow.count() == 1) {
+        console.debug(`Row located for case defendat ${defendantFullName}`)
+        expect(tableRow).toBeVisible()
+        const rowCells = await tableRow.getByRole('cell').all()
+        const expectedColData = [
+            { col: 0, value: defendantFullName },
+            ...(probationStatus ? [{ col: 1, value: probationStatus }] : []),
+            ...(offence ? [{ col: 2, value: offence }] : []),
+            ...(listing ? [{ col: 3, value: countSuffix(listing) }] : []),
+            ...(session ? [{ col: 4, value: session }] : []),
+            ...(court ? [{ col: 5, value: court }] : [])
+        ]
+        for(const data of expectedColData) {
+            expect(rowCells.at(data.col)).toContainText(data.value)
         }
+        return true
+    } else {
+        return false
+    }
+}
 
-        if (!matchFound) {
-            const nextButton = page.getByRole('link', { name: 'Next   page' });
-            if (await nextButton.isVisible()) {
-                await nextButton.click();
-                await page.waitForLoadState('networkidle');
-                await expect(page.getByText('Name'), 'Defendant').toBeVisible();
-            } else {
-                break;
-            }
+const pageAwareCheck = async (page: Page, toCheckFor: () => Promise<boolean>, failureToSatisfyMessage: string) => {
+    const rootPageUrl = page.url()
+
+    const pagination = (await page.getByLabel('Pagination navigation').all()).at(0)
+    const paginationAvailable = (pagination !== undefined)
+    let paginationDetails: { available: false } | { available: true, current: 1, pageSize: number, totalPages: number }
+    if(paginationAvailable) {
+        const paginationParts = (await pagination.getByRole('paragraph').textContent()).split(' ')
+        const first = Number(paginationParts.at(1))
+        const last = Number(paginationParts.at(3))
+        const total = Number(paginationParts.at(5))
+        const pageSize = last - first + 1;
+        const totalPages = Math.ceil(total/pageSize)
+        paginationDetails = {
+            available: true,
+            current: 1,
+            pageSize,
+            totalPages
+        }
+    } else {
+        paginationDetails = {
+            available: false
         }
     }
 
-    if (!matchFound) {
-        throw new Error(`No matching row found for name: ${expectedDefendantFullName}`);
+    let satisfied = false
+    let furtherPageAvailble = true
+    while(!satisfied && furtherPageAvailble) {
+        if(paginationDetails.available) {
+            console.debug(`Navigating to page ${paginationDetails.current}`)
+            await page.goto(`${rootPageUrl}?page=${paginationDetails.current}`)
+        }
+        satisfied = await toCheckFor()
+
+        furtherPageAvailble = !satisfied && paginationDetails.available && (paginationDetails.current < paginationDetails.totalPages)
+        if(furtherPageAvailble && paginationDetails.available) {
+            paginationDetails.current++
+        }
+    }
+
+    if(!satisfied) {
+        throw new Error(failureToSatisfyMessage)
     }
 }
 
@@ -78,7 +99,8 @@ const cases = {
         caseSummary
     },
     ensureDefendentExists,
-    verifyDefedantDetails
+    verifyDefedantDetails,
+    pageAwareCheck
 }
 
 export default cases

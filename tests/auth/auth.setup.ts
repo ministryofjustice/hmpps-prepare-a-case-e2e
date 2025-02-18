@@ -3,7 +3,7 @@ import { STORAGE_STATE } from 'playwright.config'
 import { getTestConfig } from '@utils/config/testConfig'
 
 // TODO Can we have a better assertion than the expected title, like identifiying some "is logged in state" on the page
-setup('Authenticate', async ({page}) => {
+setup('Authenticate', async ({ page }) => {
     console.debug('Authenticating test suite')
 
     const config = getTestConfig()

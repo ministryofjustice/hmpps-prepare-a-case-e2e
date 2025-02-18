@@ -1,5 +1,7 @@
 import { expect, Page } from '@playwright/test'
 import { getTestConfig } from '@utils/config/testConfig'
+import headings from '@steps/elements/headings'
+import links from '@steps/elements/links'
 
 const config = getTestConfig()
 
@@ -10,18 +12,26 @@ const editCourts = async (page: Page) => {
     await page.goto(`${config.services.prepareACase.urls.root}/my-courts/edit`)
 }
 
-const addCourtToUser = async (page: Page, court: string) => {
+const addCourtToUser = async (page: Page, courtName: string) => {
+    await addCourtsToUser(page, [courtName])
+}
+
+const addCourtsToUser = async (page: Page, courtsNames: string[]) => {
     await editCourts(page)
     
-    await page.getByRole('button', { name: /Accept analytics cookies/ }).click()
-    await page.focus('#pac-select-court')
-    await page.keyboard.type(court)
-    await page.keyboard.press('Enter')
-    await page.getByRole('button', { name: 'Add' }).click()
-    await page.locator('[href="?save=true"]', { hasText: 'Save  and continue' }).click()
-    await expect(page).toHaveTitle('My courts - Prepare a case for sentence')
-    await page.getByRole('link', { name: court }).click()
-    await expect(page).toHaveTitle('Case list - Prepare a case for sentence')
+    for(const name of courtsNames) {
+        await page.getByRole('combobox').fill(name)
+        await page.keyboard.press('Enter')
+        await page.getByRole('button', { name: 'Add' }).click()
+    }
+    await page.getByRole('button', { name: 'Save list and continue' }).click()
+}
+
+const verifyUserCourts = async (page: Page, courtNames: string[]) => {
+    await headings.exists(page, 1, 'My courts')
+    for(const name of courtNames) {
+        await links.govukLinkExists(page, name)
+    }
 }
 
 const manageCourts = {
@@ -29,7 +39,9 @@ const manageCourts = {
         myCourts,
         editCourts
     },
-    addCourtToUser
+    addCourtToUser,
+    addCourtsToUser,
+    verifyUserCourts
 }
 
 export default manageCourts
