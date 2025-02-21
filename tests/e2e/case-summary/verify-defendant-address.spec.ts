@@ -1,7 +1,9 @@
 import { Sheffield } from "@data/courtHearingRequest/courtCentres.data";
 import { TAGS } from "tests/tags";
 import caseSummary from "@steps/pages/case-summary/case-summary";
+import cases from "@steps/pages/cases/cases";
 import courtHearingGenerator from "@data/courtHearingRequest/courtHearingRequestGenerator";
+import manageCourts from "@steps/pages/courts/manageCourts";
 import { searchForDefendant } from "@steps/search-defendant/search-defendant";
 import { sendCourtHearingToEventReceiver } from "@steps/_data/data";
 import test from "@playwright/test";
@@ -18,7 +20,8 @@ test.describe('WHEN a Case and Defendant is added to the Court Hearing Event Rec
         const addressValue = person.address.address1
 
         await sendCourtHearingToEventReceiver(page, request, courtHearingRequest)
-        await searchForDefendant(page,fullName, 1)
+        await cases.pages.caseSummary(page, chosenCourt.code)
+        await searchForDefendant(page, fullName, 1)
         await caseSummary.verifyAddressDetails(page, addressValue)
     })
 })

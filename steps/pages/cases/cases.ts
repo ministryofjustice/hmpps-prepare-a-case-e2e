@@ -1,6 +1,7 @@
 import { Page, expect } from "@playwright/test"
-import { getTestConfig } from "@utils/config/testConfig"
+
 import { countSuffix } from "@utils/textUtils"
+import { getTestConfig } from "@utils/config/testConfig"
 
 const config = getTestConfig()
 
@@ -10,8 +11,8 @@ const casesForCourt = async (page: Page, courtCode: string, date?: string) => {
     }
     await page.goto(`${config.services.prepareACase.urls.root}/${courtCode}/cases${date ? `/${date}` : ''}`)
 }
-const caseSummary = async (page: Page, courtCode: string, hearingId: string, defendantId: string) => {
-    await page.goto(`${config.services.prepareACase.urls.root}/${courtCode}/hearing/${hearingId}/defendant/${defendantId}/summary`)
+const caseSummary = async (page: Page, courtCode: string) => {
+    await page.goto(`${config.services.prepareACase.urls.root}/${courtCode}/cases`)
 }
 
 const ensureDefendentExists = async (page: Page, defendantName: string) => {

@@ -1,4 +1,4 @@
-import { expect, Page } from "@playwright/test"
+import { Page, expect } from "@playwright/test"
 
 const exists = async (page: Page, level: number, text?: string) => {
     const options = {
