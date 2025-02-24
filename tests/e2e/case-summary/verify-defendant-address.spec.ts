@@ -20,7 +20,7 @@ test.describe('WHEN a Case and Defendant is added to the Court Hearing Event Rec
         const addressValue = person.address.address1
 
         await sendCourtHearingToEventReceiver(page, request, courtHearingRequest)
-        await cases.pages.caseSummary(page, chosenCourt.code)
+        await cases.pages.casesForCourt(page, chosenCourt.code)
         await searchForDefendant(page, fullName, 1)
         await caseSummary.verifyAddressDetails(page, addressValue)
     })

@@ -11,8 +11,8 @@ const casesForCourt = async (page: Page, courtCode: string, date?: string) => {
     }
     await page.goto(`${config.services.prepareACase.urls.root}/${courtCode}/cases${date ? `/${date}` : ''}`)
 }
-const caseSummary = async (page: Page, courtCode: string) => {
-    await page.goto(`${config.services.prepareACase.urls.root}/${courtCode}/cases`)
+const caseSummary = async (page: Page, courtCode: string,hearingId: string, defendantId: string) => {
+    await page.goto(`${config.services.prepareACase.urls.root}/${courtCode}/hearing/${hearingId}/defendant/${defendantId}/summary`)
 }
 
 const ensureDefendentExists = async (page: Page, defendantName: string) => {
