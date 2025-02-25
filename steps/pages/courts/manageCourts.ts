@@ -1,4 +1,5 @@
-import { expect, Page } from '@playwright/test'
+import { Page, expect } from '@playwright/test'
+
 import { getTestConfig } from '@utils/config/testConfig'
 import headings from '@steps/elements/headings'
 import links from '@steps/elements/links'
@@ -18,8 +19,7 @@ const addCourtToUser = async (page: Page, courtName: string) => {
 
 const addCourtsToUser = async (page: Page, courtsNames: string[]) => {
     await editCourts(page)
-    
-    for(const name of courtsNames) {
+    for (const name of courtsNames) {
         await page.getByRole('combobox').fill(name)
         await page.keyboard.press('Enter')
         await page.getByRole('button', { name: 'Add' }).click()
@@ -29,7 +29,7 @@ const addCourtsToUser = async (page: Page, courtsNames: string[]) => {
 
 const verifyUserCourts = async (page: Page, courtNames: string[]) => {
     await headings.exists(page, 1, 'My courts')
-    for(const name of courtNames) {
+    for (const name of courtNames) {
         await links.govukLinkExists(page, name)
     }
 }
