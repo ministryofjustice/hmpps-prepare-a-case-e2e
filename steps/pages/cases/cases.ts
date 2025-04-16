@@ -11,6 +11,7 @@ const casesForCourt = async (page: Page, courtCode: string, date?: string) => {
     }
     await page.goto(`${config.services.prepareACase.urls.root}/${courtCode}/cases${date ? `/${date}` : ''}`)
 }
+
 const caseSummary = async (page: Page, courtCode: string,hearingId: string, defendantId: string) => {
     await page.goto(`${config.services.prepareACase.urls.root}/${courtCode}/hearing/${hearingId}/defendant/${defendantId}/summary`)
 }
@@ -51,21 +52,15 @@ const verifyDefedantDetails = async (page: Page, defendantFullName: string, prob
 const pageAwareCheck = async (page: Page, toCheckFor: () => Promise<boolean>, failureToSatisfyMessage: string) => {
     const rootPageUrl = page.url()
 
-    const pagination = (await page.getByLabel('Pagination navigation').all()).at(0)
-    const paginationAvailable = (pagination !== undefined)
-    let paginationDetails: { available: false } | { available: true, current: 1, pageSize: number, totalPages: number }
-    if(paginationAvailable) {
-        const paginationParts = (await pagination.getByRole('paragraph').textContent()).split(' ')
-        const first = Number(paginationParts.at(1))
-        const last = Number(paginationParts.at(3))
-        const total = Number(paginationParts.at(5))
-        const pageSize = last - first + 1;
-        const totalPages = Math.ceil(total/pageSize)
+    let paginationDetails: { available: false } | { available: true, current: 1, totalPages: number }
+    const pagination = await page.getByLabel('Pagination')
+    if(await pagination.isVisible()) {
+        const pageList = await pagination.getByRole('listitem').all()
+        const lastPage = await pageList.at(pageList.length - 1).textContent()
         paginationDetails = {
             available: true,
             current: 1,
-            pageSize,
-            totalPages
+            totalPages: +lastPage
         }
     } else {
         paginationDetails = {

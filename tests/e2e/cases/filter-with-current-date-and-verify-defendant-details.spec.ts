@@ -23,6 +23,7 @@ test.describe('WHEN a Case and Defendant is added to the Court Hearing Event Rec
 
         await sendCourtHearingToEventReceiver(page, request, courtHearingRequest)
         await cases.pages.casesForCourt(page, chosenCourt.code, moment().format('YYYY-MM-DD'))
+        await page.reload()
         await cases.pageAwareCheck(page,
             () => cases.verifyDefedantDetails(page, fullName, "No record", offence, listing, 'Morning', courtName),
             `Unable to verify details of case entry for ${fullName}`
