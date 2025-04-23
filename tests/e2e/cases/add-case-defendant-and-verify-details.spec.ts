@@ -1,4 +1,4 @@
-import test, { expect } from "@playwright/test";
+import test from "@playwright/test";
 
 import { Sheffield } from "@data/courtHearingRequest/courtCentres.data";
 import { TAGS } from "tests/tags";
@@ -8,6 +8,8 @@ import moment from "moment";
 import { sendCourtHearingToEventReceiver } from "@steps/_data/data";
 
 const courtHearingGen = courtHearingGenerator()
+
+// Note: this test is flaky, possibly because the UI loads before the new data is created
 
 test.describe('WHEN a Case and Defendant is added to the Court Hearing Event Receiver', async () => {
     test('THEN filter with current date and verify details of the Defendant in Prepare A Case', { tag: [TAGS.ui, TAGS.regression, TAGS.smoke] }, async ({ page, request }) => {
@@ -21,7 +23,8 @@ test.describe('WHEN a Case and Defendant is added to the Court Hearing Event Rec
         const listing = defendant.offences.at(0).listingNumber
         const courtName = courtHearingRequest.hearing.courtCentre.roomName
 
-        await sendCourtHearingToEventReceiver(page, request, courtHearingRequest)
+        await sendCourtHearingToEventReceiver(request, courtHearingRequest)
+
         await cases.pages.casesForCourt(page, chosenCourt.code, moment().format('YYYY-MM-DD'))
         await page.reload()
         await cases.pageAwareCheck(page,

@@ -16,16 +16,6 @@ const caseSummary = async (page: Page, courtCode: string,hearingId: string, defe
     await page.goto(`${config.services.prepareACase.urls.root}/${courtCode}/hearing/${hearingId}/defendant/${defendantId}/summary`)
 }
 
-const ensureDefendentExists = async (page: Page, defendantName: string) => {
-    const defendantRow = page.getByRole('row', { exact: false, name: defendantName })
-    if(await defendantRow.count() == 1) {
-        expect(defendantRow).toBeVisible()
-        return true
-    } else {
-        return false
-    }
-}
-
 const verifyDefedantDetails = async (page: Page, defendantFullName: string, probationStatus?: string, offence?: string, listing?: number, session?: string, court?: string) => {
     const tableRow = page.getByRole('row', {exact: false, name: defendantFullName})
     if(await tableRow.count() == 1) {
@@ -94,7 +84,6 @@ const cases = {
         casesForCourt,
         caseSummary
     },
-    ensureDefendentExists,
     verifyDefedantDetails,
     pageAwareCheck
 }

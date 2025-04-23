@@ -5,7 +5,7 @@ import { getTestConfig } from "@utils/config/testConfig";
 
 const config = getTestConfig()
 
-export const sendCourtHearingToEventReceiver = async (page: Page, requestContext: APIRequestContext, courtHearingRequest: CourtHearingRequest) => {
+export const sendCourtHearingToEventReceiver = async (requestContext: APIRequestContext, courtHearingRequest: CourtHearingRequest) => {
     const response = await requestContext.post(includeSlug(config.services.courtHearingEventReceiver.urls.addHearing, courtHearingRequest.hearing.id, "id"),
     {
         headers: { "Authorization" : `Bearer ${config.auth.token}`},
@@ -13,6 +13,4 @@ export const sendCourtHearingToEventReceiver = async (page: Page, requestContext
     })
 
     expect(response.status()).toEqual(200)
-
-    await page.waitForTimeout(config.services.courtHearingEventReceiver.waitTime)
 }
