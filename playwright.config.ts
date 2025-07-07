@@ -16,13 +16,14 @@ const config: PlaywrightTestConfig = {
     /* Maximum time test suite can run for. */
     globalTimeout: 3600000,
     /* Run tests in files in parallel */
-    fullyParallel: true,
+    // fullyParallel: false,
     /* Fail the build on CI if you accidentally left test.only in the source code. */
     forbidOnly: !!process.env.CI,
     /* Retry on CI only */
     retries: process.env.CI ? 1 : 0,
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
     reporter: 'html',
+    workers: 1,
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
         storageState: STORAGE_STATE,

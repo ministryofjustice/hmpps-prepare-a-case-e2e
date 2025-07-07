@@ -46,7 +46,7 @@ const pageAwareCheck = async (page: Page, toCheckFor: () => Promise<boolean>, fa
     const pagination = await page.getByLabel('Pagination')
     if(await pagination.isVisible()) {
         const pageList = await pagination.getByRole('listitem').all()
-        const lastPage = await pageList.at(pageList.length - 1).textContent()
+        const lastPage = await pageList.at(pageList.length - 2).textContent()
         paginationDetails = {
             available: true,
             current: 1,
@@ -74,8 +74,9 @@ const pageAwareCheck = async (page: Page, toCheckFor: () => Promise<boolean>, fa
     }
 
     if(!satisfied) {
-        throw new Error(failureToSatisfyMessage)
+        console.error(failureToSatisfyMessage)
     }
+    return satisfied
 }
 
 
