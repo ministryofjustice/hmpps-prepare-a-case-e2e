@@ -1,20 +1,26 @@
-import test from "@playwright/test";
-
-import { Sheffield } from "@data/courtHearingRequest/courtCentres.data";
-import { TAGS } from "tests/tags";
-import cases from "@steps/pages/cases/cases";
-import courtHearingGenerator from "@data/courtHearingRequest/courtHearingRequestGenerator";
-import moment from "moment";
-import { sendCourtHearingToEventReceiver } from "@steps/_data/data";
+import { Sheffield } from '@data/courtHearingRequest/courtCentres.data';
+import { TAGS } from 'tests/tags';
+import cases from '@steps/pages/cases/cases';
+import courtHearingGenerator from '@data/courtHearingRequest/courtHearingRequestGenerator';
+import moment from 'moment';
+import { sendCourtHearingToEventReceiver } from '@steps/_data/data';
+import { expect, request, test } from '@playwright/test'
 
 const courtHearingGen = courtHearingGenerator()
 
 // Note: this test is flaky, possibly because the UI loads before the new data is created
 
 test.describe('WHEN a Case and Defendant is added to the Court Hearing Event Receiver', async () => {
+    const chosenCourt = Sheffield
+    const courtHearingRequest = courtHearingGen.generate({ court: chosenCourt })
+
+    test.beforeAll(async () => {
+        const apiContext = await request.newContext()
+        await sendCourtHearingToEventReceiver(apiContext, courtHearingRequest)
+        await apiContext.dispose()
+    })
+
     test('THEN filter with current date and verify details of the Defendant in Prepare A Case', { tag: [TAGS.ui, TAGS.regression, TAGS.smoke] }, async ({ page, request }) => {
-        const chosenCourt = Sheffield
-        const courtHearingRequest = courtHearingGen.generate({ court: chosenCourt })
         const defendant = courtHearingRequest.hearing.prosecutionCases.at(0).defendants.at(0)
         const person = defendant.personDefendant.personDetails
         const fullName = `${person.firstName} ${person.lastName}`
@@ -23,13 +29,15 @@ test.describe('WHEN a Case and Defendant is added to the Court Hearing Event Rec
         const listing = defendant.offences.at(0).listingNumber
         const courtName = courtHearingRequest.hearing.courtCentre.roomName
 
-        await sendCourtHearingToEventReceiver(request, courtHearingRequest)
-
-        await cases.pages.casesForCourt(page, chosenCourt.code, moment().format('YYYY-MM-DD'))
-        await page.reload()
-        await cases.pageAwareCheck(page,
-            () => cases.verifyDefedantDetails(page, fullName, "No record", offence, listing, 'Morning', courtName),
-            `Unable to verify details of case entry for ${fullName}`
-        )
+        await expect.poll(async () => {
+            await cases.pages.casesForCourt(page, chosenCourt.code, moment().format('YYYY-MM-DD'))
+            return await cases.pageAwareCheck(page,
+                () => cases.verifyDefedantDetails(page, fullName, 'No record', offence, listing, 'Morning', courtName),
+                `Unable to verify details of case entry for ${fullName}`
+            )
+        }, {
+            message: 'Allow for data to be created',
+            timeout: 10000,
+        }).toBe(true);
     })
 })
